@@ -42,6 +42,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		60B899DC29C61708001FDE36 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				60C3B0F129C614B900365BD4 /* Main.storyboard */,
+				60C3B0EB29C614B900365BD4 /* AppDelegate.swift */,
+				60C3B0ED29C614B900365BD4 /* SceneDelegate.swift */,
+				60C3B0F629C614BA00365BD4 /* LaunchScreen.storyboard */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		60C3B0DF29C614B900365BD4 = {
 			isa = PBXGroup;
 			children = (
@@ -63,15 +74,44 @@
 		60C3B0EA29C614B900365BD4 /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
-				60C3B0EB29C614B900365BD4 /* AppDelegate.swift */,
-				60C3B0ED29C614B900365BD4 /* SceneDelegate.swift */,
+				60B899DC29C61708001FDE36 /* Utils */,
+				60C3B10229C615B700365BD4 /* ViewModel */,
+				60C3B10129C615B500365BD4 /* Model */,
+				60C3B10029C615B200365BD4 /* View */,
+				60C3B0FF29C615AF00365BD4 /* Extension */,
 				60C3B0EF29C614B900365BD4 /* ViewController.swift */,
-				60C3B0F129C614B900365BD4 /* Main.storyboard */,
 				60C3B0F429C614BA00365BD4 /* Assets.xcassets */,
-				60C3B0F629C614BA00365BD4 /* LaunchScreen.storyboard */,
 				60C3B0F929C614BA00365BD4 /* Info.plist */,
 			);
 			path = MovieApp;
+			sourceTree = "<group>";
+		};
+		60C3B0FF29C615AF00365BD4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		60C3B10029C615B200365BD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		60C3B10129C615B500365BD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		60C3B10229C615B700365BD4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8853AABEC82206FC96D56A10 /* Pods */ = {
@@ -80,7 +120,6 @@
 				B5D9C11961A84672D8361EC3 /* Pods-MovieApp.debug.xcconfig */,
 				D0B8D8A5EEF99F3913EC37D6 /* Pods-MovieApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
