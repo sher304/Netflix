@@ -21,6 +21,7 @@ class HomeViewModel: HomeViewModelDelegate {
             switch data {
             case .success(let data):
                 items.value = data
+                print(data)
             case .failure(_):
                 break
             }

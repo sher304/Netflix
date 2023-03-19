@@ -20,7 +20,6 @@ class APIAuth: APIAuthDelegate {
     
     func getTopMovies(completion: @escaping (Result<Movies, Error>) -> Void) {
         let url = URLRequest(url: urlFactory.getTopMovies)
-        
         NetworkService.baseRequest(url: url, method: "GET", completion: completion)
     }
 }
