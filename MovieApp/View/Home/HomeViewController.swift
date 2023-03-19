@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import Hero
 import SnapKit
 
 class HomeViewController: UIViewController {
@@ -16,7 +17,7 @@ class HomeViewController: UIViewController {
     }()
     
     //MARK: SIZE
-    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 350)
+    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 460)
     
     //MARK: SCROLL VIEW
     private lazy var scrollView: UIScrollView = {
@@ -192,7 +193,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MoviesTableViewCell()
         let items = viewModel.items.value.items
-        cell.fetchData(data: items)
+        cell.fetchData(data: items, delegate: self)
         return cell
     }
     
@@ -213,4 +214,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension HomeViewController: UIScrollViewDelegate{
     
+}
+
+
+extension HomeViewController: MovieTableDelegate {
+    func didSelected() {
+        let vc = DetailViewController()
+        vc.hero.isEnabled = true
+        vc.hero.modalAnimationType = .slide(direction: .up)
+        present(vc, animated: true)
+    }
 }

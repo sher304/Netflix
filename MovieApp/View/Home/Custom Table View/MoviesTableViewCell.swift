@@ -6,7 +6,12 @@
 //
 
 import UIKit
+import Hero
 import SnapKit
+
+protocol MovieTableDelegate {
+    func didSelected()
+}
 
 class MoviesTableViewCell: UITableViewCell {
     
@@ -14,6 +19,8 @@ class MoviesTableViewCell: UITableViewCell {
     static let identifier = "MoviesCell"
     
     var items: [Item]? = nil
+    
+    var delegate: MovieTableDelegate? = nil
     
     //MARK: COLLECTION VIEW
     private lazy var moviesCollection: UICollectionView = {
@@ -45,10 +52,12 @@ class MoviesTableViewCell: UITableViewCell {
         }
     }
     
-    func fetchData(data: [Item]){
+    func fetchData(data: [Item], delegate: MovieTableDelegate){
         DispatchQueue.main.async { [self] in
             items = data
+            self.delegate = delegate
             moviesCollection.reloadData()
+            
         }
     }
     
@@ -82,5 +91,12 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     //MARK: SPACING BETWEEN CELLS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 35
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let index = indexPath.row + 1
+//        let vc = DetailViewController()
+//        vc.fetchId(id: index.description)
+        delegate?.didSelected()
     }
 }

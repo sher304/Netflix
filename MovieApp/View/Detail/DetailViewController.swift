@@ -76,6 +76,9 @@ class DetailViewController: UIViewController {
             make.height.width.equalTo(40)
             make.centerY.equalTo(movieTitle)
         }
-        
+    }
+    
+    func fetchId(id: String){
+        print(id)
     }
 }
