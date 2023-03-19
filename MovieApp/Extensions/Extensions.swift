@@ -31,7 +31,7 @@ class GradientView: UIView {
         gradient.frame = self.bounds
         gradient.colors = [gradientEndColor.cgColor, gradientStartColor.cgColor]
         gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 0.85)
+        gradient.endPoint = CGPoint(x: 0, y: 0.55)
         if gradient.superlayer == nil {
             layer.insertSublayer(gradient, at: 0)
         }
