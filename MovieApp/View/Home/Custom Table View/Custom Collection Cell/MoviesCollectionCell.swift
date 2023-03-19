@@ -34,7 +34,7 @@ class MoviesCollectionCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "The Shawshank Redemption"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.font = .systemFont(ofSize: 12, weight: .heavy)
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         return label

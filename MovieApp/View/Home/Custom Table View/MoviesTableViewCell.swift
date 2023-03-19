@@ -41,7 +41,7 @@ class MoviesTableViewCell: UITableViewCell {
         contentView.addSubview(moviesCollection)
         moviesCollection.snp.makeConstraints { make in
             make.trailing.bottom.top.equalToSuperview()
-            make.leading.equalTo(10)
+            make.leading.equalTo(15)
         }
     }
     

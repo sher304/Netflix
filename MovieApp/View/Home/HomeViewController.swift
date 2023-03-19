@@ -80,7 +80,7 @@ class HomeViewController: UIViewController {
     //MARK: MOVIE TITLE
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        label.font = .systemFont(ofSize: 26, weight: .heavy)
         label.textColor = .white
         return label
     }()
@@ -201,13 +201,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let label = UILabel()
         label.textColor = UIColor.white
         label.text = "Popular on Netflix"
-        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        label.font = .systemFont(ofSize: 26, weight: .heavy)
         return label
     }
     
     //MARK: CELL'S HEIGHT
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        return 620
     }
 }
 
