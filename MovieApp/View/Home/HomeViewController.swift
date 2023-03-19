@@ -88,6 +88,9 @@ class HomeViewController: UIViewController {
         tableV.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         tableV.delegate = self
         tableV.dataSource = self
+        tableV.showsVerticalScrollIndicator = false
+        tableV.isScrollEnabled = false
+        tableV.backgroundColor = .black
         return tableV
     }()
     
@@ -164,6 +167,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.text = "Popular on Netflix"
+        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        return label
+    }
+    
 }
 
 extension HomeViewController: UIScrollViewDelegate{

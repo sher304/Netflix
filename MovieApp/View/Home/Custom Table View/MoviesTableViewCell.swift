@@ -19,6 +19,8 @@ class MoviesTableViewCell: UITableViewCell {
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = .purple
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
         return collection
     }()
 
