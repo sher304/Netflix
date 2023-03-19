@@ -6,12 +6,21 @@
 //
 
 import UIKit
+import Hero
 import SnapKit
+
+protocol MovieTableDelegate {
+    func didSelected()
+}
 
 class MoviesTableViewCell: UITableViewCell {
     
     //MARK: THE CELL'S IDENTIFIER
     static let identifier = "MoviesCell"
+    
+    var items: [Item]? = nil
+    
+    var delegate: MovieTableDelegate? = nil
     
     //MARK: COLLECTION VIEW
     private lazy var moviesCollection: UICollectionView = {
@@ -21,12 +30,12 @@ class MoviesTableViewCell: UITableViewCell {
         collection.register(MoviesCollectionCell.self, forCellWithReuseIdentifier: MoviesCollectionCell.identifier)
         collection.delegate = self
         collection.dataSource = self
-        collection.backgroundColor = .purple
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = .black
         return collection
     }()
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
@@ -34,14 +43,24 @@ class MoviesTableViewCell: UITableViewCell {
     
     //MARK: SETUP CONSTRAINTS
     private func setupConstraints(){
-        contentView.backgroundColor = .purple
+        contentView.backgroundColor = .black
+        
         contentView.addSubview(moviesCollection)
         moviesCollection.snp.makeConstraints { make in
             make.trailing.bottom.top.equalToSuperview()
-            make.leading.equalTo(10)
+            make.leading.equalTo(15)
         }
     }
-
+    
+    func fetchData(data: [Item], delegate: MovieTableDelegate){
+        DispatchQueue.main.async { [self] in
+            items = data
+            self.delegate = delegate
+            moviesCollection.reloadData()
+            
+        }
+    }
+    
 }
 
 //MARK: COLLECTION VIEW SETTINGS
@@ -49,13 +68,18 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //MARK: COLLECTION VIEW'S ROW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return items?.count ?? 0
     }
     
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath)
-        cell.backgroundColor = .orange
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
+        
+        guard let items = items?[indexPath.row] else { return MoviesCollectionCell()}
+        let titles = items.title
+        let crews = items.crew
+        let posterURL = items.image
+        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.imDBRating)
         return cell
     }
     
@@ -67,5 +91,12 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     //MARK: SPACING BETWEEN CELLS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 35
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = indexPath.row + 1
+        let vc = DetailViewController()
+        vc.fetchId(id: index.description)
+        delegate?.didSelected()
     }
 }

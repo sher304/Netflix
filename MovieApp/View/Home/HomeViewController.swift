@@ -6,12 +6,18 @@
 //
 
 import UIKit
+import Kingfisher
+import Hero
 import SnapKit
 
 class HomeViewController: UIViewController {
     
+    private lazy var viewModel: HomeViewModel = {
+        return HomeViewModel()
+    }()
+    
     //MARK: SIZE
-    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 350)
+    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 460)
     
     //MARK: SCROLL VIEW
     private lazy var scrollView: UIScrollView = {
@@ -27,7 +33,7 @@ class HomeViewController: UIViewController {
     private lazy var contentView: UIView = {
         let view = UIView()
         view.frame.size = contentSize
-        view.backgroundColor = .red
+        view.backgroundColor = .black
         return view
     }()
     
@@ -52,7 +58,6 @@ class HomeViewController: UIViewController {
     //MARK: POSTER
     private lazy var posterImage: UIImageView = {
         let imageV = UIImageView()
-        imageV.backgroundColor = .green
         imageV.isUserInteractionEnabled = true
         return imageV
     }()
@@ -76,8 +81,7 @@ class HomeViewController: UIViewController {
     //MARK: MOVIE TITLE
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Shawshank Redemption"
-        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        label.font = .systemFont(ofSize: 26, weight: .heavy)
         label.textColor = .white
         return label
     }()
@@ -96,6 +100,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
+        bindViewModel()
     }
     
     //MARK: SETUP CONSTRAINTS
@@ -107,7 +112,7 @@ class HomeViewController: UIViewController {
         contentView.addSubview(posterImage)
         posterImage.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(415)
+            make.height.equalTo(445)
         }
         
         //MARK: NETFLIX LOGO - CONSTRAINT
@@ -155,6 +160,25 @@ class HomeViewController: UIViewController {
             make.top.equalTo(gradientView.snp.bottom)
         }
     }
+    
+    func bindViewModel(){
+        viewModel.shareData()
+        viewModel.items.bind { _ in
+            DispatchQueue.main.async { [self] in
+                moviesTable.reloadData()
+                fillData()
+            }
+        }
+    }
+    
+    func fillData(){
+        DispatchQueue.main.async { [self] in
+            let item = viewModel.items.value.items
+            movieTitle.text = item.first?.title
+            posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
+            view.layoutIfNeeded()
+        }
+    }
 }
 
 //MARK: TABLE VIEW SETTINGS
@@ -162,13 +186,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: NUMBER OF ROWS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 1
     }
     
     //MARK: CONNETCT WITH A CUSTOM CELL
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MoviesTableViewCell()
-
+        let items = viewModel.items.value.items
+        cell.fetchData(data: items, delegate: self)
         return cell
     }
     
@@ -177,13 +202,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let label = UILabel()
         label.textColor = UIColor.white
         label.text = "Popular on Netflix"
-        label.font = .systemFont(ofSize: 21, weight: .semibold)
+        label.font = .systemFont(ofSize: 26, weight: .heavy)
         return label
     }
     
     //MARK: CELL'S HEIGHT
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        return 620
     }
 }
 
@@ -192,6 +217,11 @@ extension HomeViewController: UIScrollViewDelegate{
 }
 
 
-
-
-
+extension HomeViewController: MovieTableDelegate {
+    func didSelected() {
+        let vc = DetailViewController()
+        vc.hero.isEnabled = true
+        vc.hero.modalAnimationType = .slide(direction: .up)
+        present(vc, animated: true)
+    }
+}
