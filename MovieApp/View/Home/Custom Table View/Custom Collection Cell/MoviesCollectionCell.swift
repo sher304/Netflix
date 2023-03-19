@@ -6,8 +6,10 @@
 //
 
 import Foundation
-import SnapKit
+import Kingfisher
 import UIKit
+import SnapKit
+
 
 class MoviesCollectionCell: UICollectionViewCell {
     
@@ -63,8 +65,19 @@ class MoviesCollectionCell: UICollectionViewCell {
         setupConstraints()
     }
     
+    func fillData(title: String, crew: String, posterURL: String, rating: String){
+        DispatchQueue.main.async { [self] in
+            movieTitle.text = title
+            crewLabel.text = crew
+            posterImage.kf.setImage(with: URL(string: posterURL))
+            ratingLabel.text = rating
+        }
+    }
+    
     //MARK: SETUP CONSTRAINTS
     private func setupConstraints(){
+        contentView.backgroundColor = .black
+        
         contentView.addSubview(posterImage)
         posterImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
