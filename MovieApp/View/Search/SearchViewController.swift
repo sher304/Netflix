@@ -26,7 +26,10 @@ class SearchViewController: UIViewController {
     
     private lazy var searchTable: UITableView = {
         let tableV = UITableView()
-        
+        tableV.register(SearchTableCell.self, forCellReuseIdentifier: SearchTableCell.identifier)
+        tableV.delegate = self
+        tableV.dataSource = self
+        tableV.backgroundColor = .black
         return tableV
     }()
     
@@ -44,6 +47,31 @@ class SearchViewController: UIViewController {
             make.height.equalTo(52)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
         }
+        
+        view.addSubview(searchTable)
+        searchTable.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(15)
+            make.leading.bottom.trailing.equalToSuperview()
+        }
     }
+    
+}
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SearchTableCell()
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+    
+    
     
 }
