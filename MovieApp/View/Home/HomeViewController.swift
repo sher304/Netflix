@@ -10,6 +10,10 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
+    private lazy var viewModel: HomeViewModel = {
+        return HomeViewModel()
+    }()
+    
     //MARK: SIZE
     private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 350)
     
@@ -76,7 +80,7 @@ class HomeViewController: UIViewController {
     //MARK: MOVIE TITLE
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Shawshank Redemption"
+//        label.text = "The Shawshank Redemption"
         label.font = .systemFont(ofSize: 21, weight: .semibold)
         label.textColor = .white
         return label
@@ -96,6 +100,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
+        bindViewModel()
     }
     
     //MARK: SETUP CONSTRAINTS
@@ -155,6 +160,23 @@ class HomeViewController: UIViewController {
             make.top.equalTo(gradientView.snp.bottom)
         }
     }
+    
+    func bindViewModel(){
+        viewModel.shareData()
+        viewModel.items.bind { _ in
+            DispatchQueue.main.async { [self] in
+                moviesTable.reloadData()
+                fillData()
+            }
+        }
+    }
+    
+    func fillData(){
+        DispatchQueue.main.async { [self] in
+            movieTitle.text = viewModel.items.value.items.first?.title
+            view.layoutIfNeeded()
+        }
+    }
 }
 
 //MARK: TABLE VIEW SETTINGS
@@ -162,7 +184,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: NUMBER OF ROWS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return viewModel.items.value.items.count
     }
     
     //MARK: CONNETCT WITH A CUSTOM CELL
@@ -190,8 +212,3 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 extension HomeViewController: UIScrollViewDelegate{
     
 }
-
-
-
-
-
