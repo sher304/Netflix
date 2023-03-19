@@ -13,11 +13,13 @@ class MoviesCollectionCell: UICollectionViewCell {
     
     static let identifier = "Collection Cell"
     
-    private lazy var testView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray
-        return view
+    private lazy var posterImage: UIImageView = {
+        let imageV = UIImageView()
+        imageV.backgroundColor = .orange
+        return imageV
     }()
+    
+    
     
     
     override func layoutSubviews(){
@@ -26,9 +28,10 @@ class MoviesCollectionCell: UICollectionViewCell {
     }
     
     func setupConstraints(){
-        contentView.addSubview(testView)
-        testView.snp.makeConstraints { make in
+        contentView.addSubview(posterImage)
+        posterImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
     }
 }

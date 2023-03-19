@@ -176,6 +176,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         return label
     }
     
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
 }
 
 extension HomeViewController: UIScrollViewDelegate{
