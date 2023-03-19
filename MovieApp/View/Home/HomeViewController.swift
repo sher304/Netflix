@@ -148,6 +148,7 @@ class HomeViewController: UIViewController {
             make.centerX.centerY.equalToSuperview()
         }
         
+        //MARK: MOVIE TABLE VIEW - CONSTRAINT
         contentView.addSubview(moviesTable)
         moviesTable.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -156,17 +157,22 @@ class HomeViewController: UIViewController {
     }
 }
 
+//MARK: TABLE VIEW SETTINGS
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    //MARK: NUMBER OF ROWS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 7
     }
     
+    //MARK: CONNETCT WITH A CUSTOM CELL
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MoviesTableViewCell()
 
         return cell
     }
     
+    //MARK: HEADER TITLE
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
         label.textColor = UIColor.white
@@ -175,7 +181,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         return label
     }
     
-    
+    //MARK: CELL'S HEIGHT
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 220
     }

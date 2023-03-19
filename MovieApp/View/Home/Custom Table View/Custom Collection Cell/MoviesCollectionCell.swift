@@ -11,20 +11,23 @@ import UIKit
 
 class MoviesCollectionCell: UICollectionViewCell {
     
+    //MARK: IDENTIFIER OF CELL
     static let identifier = "Collection Cell"
     
+    //MARK: POSTER IMAGE VIEW
     private lazy var posterImage: UIImageView = {
         let imageV = UIImageView()
         imageV.backgroundColor = .orange
         return imageV
     }()
     
+    //MARK: GRADIENT OF POSTER
     private lazy var gradientOfPoster: GradientView = {
         let gradient = GradientView(gradientStartColor: .black, gradientEndColor: .clear)
         return gradient
     }()
     
-    
+    //MARK: MOVIE TITLE
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
         label.text = "The Shawshank Redemption"
@@ -35,6 +38,7 @@ class MoviesCollectionCell: UICollectionViewCell {
         return label
     }()
     
+    //MARK: CREWS TITLE
     private lazy var crewLabel: UILabel = {
         let label = UILabel()
         label.text = "Frank Darabont (dir.), Tim Robbins, Morgan Freeman"
@@ -45,6 +49,7 @@ class MoviesCollectionCell: UICollectionViewCell {
         return label
     }()
     
+    //MARK: RATTING TITLE
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
         label.text = "9.2"
@@ -58,7 +63,8 @@ class MoviesCollectionCell: UICollectionViewCell {
         setupConstraints()
     }
     
-    func setupConstraints(){
+    //MARK: SETUP CONSTRAINTS
+    private func setupConstraints(){
         contentView.addSubview(posterImage)
         posterImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -89,6 +95,5 @@ class MoviesCollectionCell: UICollectionViewCell {
             make.trailing.equalTo(-15)
             make.centerY.equalTo(crewLabel)
         }
-        
     }
 }
