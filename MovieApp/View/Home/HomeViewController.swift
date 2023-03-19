@@ -71,7 +71,6 @@ class HomeViewController: UIViewController {
     //MARK: GRADIENT VIEW
     private lazy var gradientView: GradientView = {
         let view = GradientView(gradientStartColor: .black, gradientEndColor: .clear)
-        view.backgroundColor = .orange
         return view
     }()
     //MARK: MOVIE TITLE
@@ -178,7 +177,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 220
     }
 }
 

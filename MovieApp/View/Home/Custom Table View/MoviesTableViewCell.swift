@@ -31,9 +31,11 @@ class MoviesTableViewCell: UITableViewCell {
     }
     
     private func setupConstraints(){
+        contentView.backgroundColor = .purple
         contentView.addSubview(moviesCollection)
         moviesCollection.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.trailing.bottom.top.equalToSuperview()
+            make.leading.equalTo(10)
         }
     }
 
@@ -52,6 +54,10 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 103, height: 170)
+        return CGSize(width: 153, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 35
     }
 }
