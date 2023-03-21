@@ -14,31 +14,23 @@ protocol DetailViewModelDelegate {
 
 class DetailViewModel: DetailViewModelDelegate {
     
-    var items = Dynamic(Movies(items: [], errorMessage: ""))
+    var itemMovie = Dynamic(Movie(id: "", title: "", originalTitle: "", fullTitle: "", type: "", year: "", image: "", releaseDate: "", runtimeMins: "", runtimeStr: "", plot: "", plotLocal: "", plotLocalIsRTL: Bool(), awards: "", directors: "", directorList: [], writers: "", writerList: [], stars: "", starList: [], actorList: [], fullCast: .none, genres: "", genreList: [], companies: "", companyList: [], countries: "", countryList: [], languages: "", languageList: [], contentRating: "", imDBRating: "", imDBRatingVotes: "", metacriticRating: "", ratings: .none, wikipedia: .none, posters: .none, images: .none, trailer: .none, boxOffice: BoxOffice(budget: "", openingWeekendUSA: "", grossUSA: "", cumulativeWorldwideGross: ""), tagline: .none, keywords: "", keywordList: [], similars: [], tvSeriesInfo: .none, tvEpisodeInfo: .none, errorMessage: ""))
     
-    var sortedItem = Dynamic(Item(id: "", rank: "", title: "", fullTitle: "", year: "", image: "", crew: "", imDBRating: "", imDBRatingCount: ""))
+    private lazy var network: Network = {
+        return Network()
+    }()
     
-    var id: String? = nil
+    var id: String?
+    
+    func getId(id: String) {
+        self.id = "tt0110413"
+    }
     
     func loadData(){
-        APIAuth().getTopMovies { data in
-            switch data {
-            case.success(let data):
-                for i in data.items {
-                    if i.id == self.id{
-                        self.items.value = data
-                        print(i)
-                        print(data)
-                    }
-                }
-                break
-            case.failure(_):
-                break
-            }
+        network.getMovie(id: id ?? "tt0110413") { movie in
+            print(self.id ?? "")
+            self.itemMovie.value = movie
         }
     }
     
-    func getId(id: String) {
-        self.id = id
-    }
 }

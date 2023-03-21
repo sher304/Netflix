@@ -176,7 +176,6 @@ class HomeViewController: UIViewController {
             let item = viewModel.items.value.items
             movieTitle.text = item.first?.title
             posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
-            view.layoutIfNeeded()
         }
     }
 }

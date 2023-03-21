@@ -11,6 +11,7 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
+    
     private lazy var viewModel: DetailViewModel = {
         return DetailViewModel()
     }()
@@ -57,8 +58,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupconstraints()
         bindViewModel()
+        setupconstraints()
     }
     
     private func setupconstraints(){
@@ -100,27 +101,24 @@ class DetailViewController: UIViewController {
     }
     
     func fetchId(id: String){
-        print(id)
         viewModel.getId(id: id)
     }
     
     func bindViewModel(){
-        viewModel.items.bind { _ in
+        viewModel.loadData()
+        viewModel.itemMovie.bind { movie in
             DispatchQueue.main.async { [self] in
-                fetchData()
-                self.view.layoutIfNeeded()
+                movieTitle.text = movie.fullTitle
+                movieInfrom.text = movie.plot
+                print(movie.fullTitle)
+                moviePoster.kf.indicatorType = .activity
+                moviePoster.kf.setImage(with: URL(string: movie.image))
             }
         }
-    }
-    
-    func fetchData(){
-        let items = viewModel.items.value
-        movieTitle.text = items.items.first?.title
-        moviePoster.kf.indicatorType = .activity
-        moviePoster.kf.setImage(with: URL(string: items.items.first?.image ?? ""))
     }
     
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
+    
 }

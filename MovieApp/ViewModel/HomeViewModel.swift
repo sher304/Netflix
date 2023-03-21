@@ -16,15 +16,13 @@ class HomeViewModel: HomeViewModelDelegate {
     
     var items = Dynamic(Movies(items: [], errorMessage: String()))
     
+    private lazy var network: Network = {
+        return Network()
+    }()
+    
     func shareData(){
-        APIAuth().getTopMovies { [self] data in
-            switch data {
-            case .success(let data):
-                items.value = data
-                print(data)
-            case .failure(_):
-                break
-            }
+        network.getMovies { movies in
+            self.items.value = movies
         }
     }
     
