@@ -99,8 +99,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupConstraints()
         bindViewModel()
+        setupConstraints()
     }
     
     //MARK: SETUP CONSTRAINTS
@@ -160,21 +160,34 @@ class HomeViewController: UIViewController {
             make.top.equalTo(gradientView.snp.bottom)
         }
     }
+
     
     func bindViewModel(){
         viewModel.shareData()
         viewModel.items.bind { _ in
             DispatchQueue.main.async { [self] in
-                moviesTable.reloadData()
-                fillData()
+                self.movieTitle.text = viewModel.items.value.results.first?.name
+                self.moviesTable.reloadData()
+
             }
         }
     }
     
+//    func bindViewModel(){
+//        viewModel.shareData()
+//        viewModel.items.bind { _ in
+//            DispatchQueue.main.async { [self] in
+//                moviesTable.reloadData()
+//                fillData()
+//            }
+//        }
+//    }
+    
     func fillData(){
         DispatchQueue.main.async { [self] in
-            let item = viewModel.items.value.items
-            movieTitle.text = item.first?.title
+            let item = viewModel.items.value.results
+            print(item)
+            movieTitle.text = item.first?.name
             posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
         }
     }
@@ -191,7 +204,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: CONNETCT WITH A CUSTOM CELL
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MoviesTableViewCell()
-        let items = viewModel.items.value.items
+        let items = viewModel.items.value
         cell.fetchData(data: items, delegate: self)
         return cell
     }

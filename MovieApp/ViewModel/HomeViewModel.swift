@@ -14,15 +14,23 @@ protocol HomeViewModelDelegate {
 
 class HomeViewModel: HomeViewModelDelegate {
     
-    var items = Dynamic(Movies(items: [], errorMessage: String()))
+    //    var items = Dynamic(Movies(items: [], errorMessage: String()))
+    
+    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
     
     private lazy var network: Network = {
         return Network()
     }()
     
+    //    func shareData(){
+    //        network.getMovies { movies in
+    //            self.items.value = movies
+    //        }
+    //    }
+    
     func shareData(){
-        network.getMovies { movies in
-            self.items.value = movies
+        network.getAllTest { tests in
+            self.items.value = tests
         }
     }
     
