@@ -10,7 +10,7 @@ import Hero
 import SnapKit
 
 protocol MovieTableDelegate {
-    func didSelected()
+    func didSelected(indx: String)
 }
 
 class MoviesTableViewCell: UITableViewCell {
@@ -18,7 +18,7 @@ class MoviesTableViewCell: UITableViewCell {
     //MARK: THE CELL'S IDENTIFIER
     static let identifier = "MoviesCell"
     
-    var items: [Item]? = nil
+    var items: TestAll? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -52,7 +52,16 @@ class MoviesTableViewCell: UITableViewCell {
         }
     }
     
-    func fetchData(data: [Item], delegate: MovieTableDelegate){
+//    func fetchData(data: [Item], delegate: MovieTableDelegate){
+//        DispatchQueue.main.async { [self] in
+//            items = data
+//            self.delegate = delegate
+//            moviesCollection.reloadData()
+//
+//        }
+//    }
+    
+    func fetchData(data: TestAll, delegate: MovieTableDelegate){
         DispatchQueue.main.async { [self] in
             items = data
             self.delegate = delegate
@@ -68,18 +77,18 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //MARK: COLLECTION VIEW'S ROW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items?.count ?? 0
+        return items?.results.count ?? 0
     }
     
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
         
-        guard let items = items?[indexPath.row] else { return MoviesCollectionCell()}
-        let titles = items.title
-        let crews = items.crew
+        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
+        let titles = items.name
+        let crews = items.created
         let posterURL = items.image
-        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.imDBRating)
+        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.type)
         return cell
     }
     
@@ -95,8 +104,8 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.row + 1
-        let vc = DetailViewController()
-        vc.fetchId(id: index.description)
-        delegate?.didSelected()
+//        let vc = DetailViewController()
+//        vc.fetchId(id: index.description)
+        delegate?.didSelected(indx: index.description)
     }
 }
