@@ -101,20 +101,19 @@ class DetailViewController: UIViewController {
     }
     
     func fetchId(id: String){
-        viewModel.getId(id: id)
+        viewModel.id = id
     }
     
     func bindViewModel(){
         viewModel.loadData()
-//        viewModel.itemMovie.bind { movie in
-//            DispatchQueue.main.async { [self] in
-//                movieTitle.text = movie.fullTitle
-//                movieInfrom.text = movie.plot
-//                print(movie.fullTitle)
-//                moviePoster.kf.indicatorType = .activity
-//                moviePoster.kf.setImage(with: URL(string: movie.image))
-//            }
-//        }
+        viewModel.items.bind { chars in
+            DispatchQueue.main.async {
+                self.movieTitle.text = chars.name
+                self.movieInfrom.text = chars.type
+                self.moviePoster.kf.indicatorType = .activity
+                self.moviePoster.kf.setImage(with: URL(string: chars.image))
+            }
+        }
     }
     
     @objc func dismissTapped(){

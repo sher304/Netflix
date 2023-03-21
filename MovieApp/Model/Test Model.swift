@@ -84,3 +84,23 @@ class JSONNull: Codable, Hashable {
         try container.encodeNil()
     }
 }
+
+
+
+// MARK: - SingleTest
+struct SingleTest: Codable {
+    let id: Int
+    let name, status, species, type: String
+    let gender: String
+    let origin, location: LocationSingle
+    let image: String
+    let episode: [String]
+    let url: String
+    let created: String
+}
+
+// MARK: - Location
+struct LocationSingle: Codable {
+    let name: String
+    let url: String
+}

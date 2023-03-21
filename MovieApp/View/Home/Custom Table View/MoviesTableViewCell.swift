@@ -10,7 +10,7 @@ import Hero
 import SnapKit
 
 protocol MovieTableDelegate {
-    func didSelected()
+    func didSelected(indx: String)
 }
 
 class MoviesTableViewCell: UITableViewCell {
@@ -104,8 +104,8 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.row + 1
-        let vc = DetailViewController()
-        vc.fetchId(id: index.description)
-        delegate?.didSelected()
+//        let vc = DetailViewController()
+//        vc.fetchId(id: index.description)
+        delegate?.didSelected(indx: index.description)
     }
 }

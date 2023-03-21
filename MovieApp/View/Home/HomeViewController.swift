@@ -230,10 +230,11 @@ extension HomeViewController: UIScrollViewDelegate{
 
 
 extension HomeViewController: MovieTableDelegate {
-    func didSelected() {
+    func didSelected(indx: String) {
         let vc = DetailViewController()
         vc.hero.isEnabled = true
         vc.hero.modalAnimationType = .slide(direction: .up)
+        vc.fetchId(id: indx)
         present(vc, animated: true)
     }
 }
