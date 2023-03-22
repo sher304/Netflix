@@ -28,20 +28,11 @@ class DetailViewModel: DetailViewModelDelegate {
         print(id)
     }
     
-    //    func loadData(){
-    //        network.getMovie(id: id ?? "tt0110413") { movie in
-    //            print(self.id ?? "")
-    //            self.itemMovie.value = movie
-    //        }
-    //    }
-    
     var items = Dynamic(SingleTest(id: 0, name: "", status: "", species: "", type: "", gender: "", origin: LocationSingle(name: "", url: ""), location: LocationSingle(name: "", url: ""), image: "", episode: [], url: "", created: ""))
 
     
     func loadData(){
-        print(id)
         network.getCharacter(id: id ?? "3") { single in
-            print(self.id)
             self.items.value = single
         }
     }

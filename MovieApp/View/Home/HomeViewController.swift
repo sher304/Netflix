@@ -167,21 +167,12 @@ class HomeViewController: UIViewController {
         viewModel.items.bind { _ in
             DispatchQueue.main.async { [self] in
                 self.movieTitle.text = viewModel.items.value.results.first?.name
+                self.posterImage.kf.setImage(with: URL(string: viewModel.items.value.results.first?.image ?? "nil"))
                 self.moviesTable.reloadData()
 
             }
         }
     }
-    
-//    func bindViewModel(){
-//        viewModel.shareData()
-//        viewModel.items.bind { _ in
-//            DispatchQueue.main.async { [self] in
-//                moviesTable.reloadData()
-//                fillData()
-//            }
-//        }
-//    }
     
     func fillData(){
         DispatchQueue.main.async { [self] in
