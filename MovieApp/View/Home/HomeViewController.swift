@@ -52,6 +52,7 @@ class HomeViewController: UIViewController {
         button.contentHorizontalAlignment = .fill
         button.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
         button.tintColor = .white
+        button.addTarget(self, action: #selector(didSearchTapped), for: .touchUpInside)
         return button
     }()
     
@@ -181,6 +182,13 @@ class HomeViewController: UIViewController {
             movieTitle.text = item.first?.name
             posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
         }
+    }
+    
+    @objc func didSearchTapped(){
+        let vc = SearchViewController()
+        vc.hero.isEnabled = true
+        vc.hero.modalAnimationType = .cover(direction: .up)
+        present(vc, animated: true)
     }
 }
 
