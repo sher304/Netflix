@@ -15,8 +15,11 @@ protocol SearchViewModelDelegate {
 
 class SearchViewModel: SearchViewModelDelegate{
     
-    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
-    var sortedItems: [Result] = []
+//    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
+//    var sortedItems: [Result] = []
+    
+    var items = Dynamic(Movies(items: [], errorMessage: ""))
+    var sortedMovies: [Item] = []
     
     private lazy var network: NetwrokService = {
         return Network()
@@ -26,7 +29,7 @@ class SearchViewModel: SearchViewModelDelegate{
     var didChanged: Bool?
     
     func shareData(){
-        network.getAllTest { items in
+        network.getMovies { items in
             self.items.value = items
         }
     }
@@ -38,7 +41,7 @@ class SearchViewModel: SearchViewModelDelegate{
     }
     
     func filterData(){
-        self.sortedItems = self.items.value.results.filter({$0.name.prefix(self.title?.count ?? 0) == self.title ?? ""})
+        self.sortedMovies = self.items.value.items.filter({$0.title.prefix(self.title?.count ?? 0) == self.title ?? ""})
     }
     
 }

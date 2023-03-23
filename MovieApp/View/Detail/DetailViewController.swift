@@ -102,16 +102,19 @@ class DetailViewController: UIViewController {
     
     func fetchId(id: String){
         viewModel.id = id
+        
     }
     
     func bindViewModel(){
         viewModel.loadData()
-        viewModel.items.bind { chars in
+        viewModel.itemMovie.bind { chars in
+            print(chars)
             DispatchQueue.main.async {
-                self.movieTitle.text = chars.name
+                print(chars.fullTitle)
+                self.movieTitle.text = chars.fullTitle
                 self.movieInfrom.text = chars.type
                 self.moviePoster.kf.indicatorType = .activity
-                self.moviePoster.kf.setImage(with: URL(string: chars.image))
+                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
             }
         }
     }

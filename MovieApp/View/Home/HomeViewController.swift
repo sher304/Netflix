@@ -165,10 +165,10 @@ class HomeViewController: UIViewController {
     
     func bindViewModel(){
         viewModel.shareData()
-        viewModel.items.bind { _ in
+        viewModel.movies.bind { _ in
             DispatchQueue.main.async { [self] in
-                self.movieTitle.text = viewModel.items.value.results.first?.name
-                self.posterImage.kf.setImage(with: URL(string: viewModel.items.value.results.first?.image ?? "nil"))
+                self.movieTitle.text = viewModel.movies.value.items.first?.title
+                self.posterImage.kf.setImage(with: URL(string: viewModel.movies.value.items.first?.image ?? "nil"))
                 self.moviesTable.reloadData()
 
             }
@@ -177,9 +177,9 @@ class HomeViewController: UIViewController {
     
     func fillData(){
         DispatchQueue.main.async { [self] in
-            let item = viewModel.items.value.results
+            let item = viewModel.movies.value.items
             print(item)
-            movieTitle.text = item.first?.name
+            movieTitle.text = item.first?.fullTitle
             posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
         }
     }
@@ -203,7 +203,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: CONNETCT WITH A CUSTOM CELL
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MoviesTableViewCell()
-        let items = viewModel.items.value
+        let items = viewModel.movies.value
         cell.fetchData(data: items, delegate: self)
         return cell
     }
@@ -233,7 +233,11 @@ extension HomeViewController: MovieTableDelegate {
         let vc = DetailViewController()
         vc.hero.isEnabled = true
         vc.hero.modalAnimationType = .slide(direction: .up)
-        vc.fetchId(id: indx)
+        viewModel.movies.value.items.forEach { i in
+            if i.rank == indx{
+                vc.fetchId(id: i.id)
+            }
+        }
         present(vc, animated: true)
     }
 }
