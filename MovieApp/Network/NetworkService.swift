@@ -14,6 +14,8 @@ protocol NetwrokService {
     
     func getAllTest(completion: @escaping(TestAll) -> Void)
     func getCharacter(id: String, completion: @escaping(SingleTest) -> Void)
+
+    
 }
 
 class Network: NetwrokService {
@@ -94,5 +96,21 @@ class Network: NetwrokService {
             }
         }
     }
+    
+//    func searchMoview(title: String, completion: @escaping(TestSearchModel) -> Void){
+//        //        guard let url = URL(string: "https://imdb-api.com/en/API/Search/k_cd0ge5lq/") else { return }
+//        guard let url = URL(string: "https://rickandmortyapi.com/api/character/?page=\(title)") else { return }
+//        print(url)
+//        AF.request(url).response { responce in
+//            DispatchQueue.main.async {
+//                guard let data = responce.data else { return }
+//                //                guard let jsonObj = try? JSONDecoder().decode(SearchModel.self, from: data) else { return }
+//                guard let jsonObj = try? JSONDecoder().decode(TestSearchModel.self, from: data) else { return }
+//                print(jsonObj)
+//                print(String(data: data, encoding: .utf8))
+//                completion(jsonObj)
+//            }
+//        }
+//    }
     
 }

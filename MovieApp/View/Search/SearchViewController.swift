@@ -10,17 +10,23 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     
+    
+    
+    private lazy var searchViewModel: SearchViewModel = {
+        return SearchViewModel()
+    }()
+    
     private lazy var searchBar: UISearchBar = {
         let searchB = UISearchBar()
         searchB.backgroundImage = UIImage()
         searchB.backgroundColor = .darkGray
         searchB.searchTextField.leftView?.tintColor = .white
         searchB.searchTextField.backgroundColor = .darkGray
-//        searchB.placeholder = "Search for a show, movie, genre, e.t.c."
         searchB.layer.cornerRadius = 14
         searchB.searchTextField.textColor = .white
         searchB.autocorrectionType = .no
         searchB.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search for a show, movie, genre, e.t.c.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        searchB.delegate = self
         return searchB
     }()
     
@@ -33,10 +39,12 @@ class SearchViewController: UIViewController {
         return tableV
     }()
     
-
-
+    var searchetList: [TestSearchModel] = []
+    var didSearchet = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        binder()
         setupConstraints()
     }
     
@@ -55,23 +63,48 @@ class SearchViewController: UIViewController {
         }
     }
     
+    func binder(){
+        searchViewModel.shareData()
+        searchViewModel.items.bind { items in
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
+    
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if searchViewModel.didChanged ?? false{
+            return searchViewModel.sortedItems.count
+        }else{
+            return searchViewModel.items.value.results.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchTableCell()
-        
+        if searchViewModel.didChanged ?? false{
+            let items = searchViewModel.sortedItems[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
+        }else{
+            let items = searchViewModel.items.value.results[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
+}
+
+extension SearchViewController: UISearchBarDelegate{
     
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchViewModel.setTitle(title: searchBar.text ?? "")
+        binder()
+    }
     
 }
