@@ -108,9 +108,7 @@ class DetailViewController: UIViewController {
     func bindViewModel(){
         viewModel.loadData()
         viewModel.itemMovie.bind { chars in
-            print(chars)
             DispatchQueue.main.async {
-                print(chars.fullTitle)
                 self.movieTitle.text = chars.fullTitle
                 self.movieInfrom.text = chars.type
                 self.moviePoster.kf.indicatorType = .activity
