@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 import SnapKit
 
 class SearchTableCell: UITableViewCell{
@@ -46,6 +47,14 @@ class SearchTableCell: UITableViewCell{
         movieTitle.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(posterImage.snp.trailing).offset(5)
+        }
+    }
+    
+    func fillData(title: String, url: String){
+        DispatchQueue.main.async {
+            self.movieTitle.text = title
+            self.posterImage.kf.indicatorType = .activity
+            self.posterImage.kf.setImage(with: URL(string: url))
         }
     }
 }

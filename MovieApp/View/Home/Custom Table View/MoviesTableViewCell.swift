@@ -18,7 +18,7 @@ class MoviesTableViewCell: UITableViewCell {
     //MARK: THE CELL'S IDENTIFIER
     static let identifier = "MoviesCell"
     
-    var items: TestAll? = nil
+    var items: Movies? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -61,7 +61,7 @@ class MoviesTableViewCell: UITableViewCell {
 //        }
 //    }
     
-    func fetchData(data: TestAll, delegate: MovieTableDelegate){
+    func fetchData(data: Movies, delegate: MovieTableDelegate){
         DispatchQueue.main.async { [self] in
             items = data
             self.delegate = delegate
@@ -77,18 +77,19 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //MARK: COLLECTION VIEW'S ROW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items?.results.count ?? 0
+        return items?.items.count ?? 0
     }
     
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
         
-        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
-        let titles = items.name
-        let crews = items.created
+        
+        guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
+        let titles = items.fullTitle
+        let crews = items.crew
         let posterURL = items.image
-        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.type)
+        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.imDBRating)
         return cell
     }
     
@@ -104,8 +105,6 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.row + 1
-//        let vc = DetailViewController()
-//        vc.fetchId(id: index.description)
         delegate?.didSelected(indx: index.description)
     }
 }
