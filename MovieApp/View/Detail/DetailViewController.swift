@@ -45,6 +45,7 @@ class DetailViewController: UIViewController {
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .white
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(didFavSelected), for: .touchUpInside)
         return button
     }()
     
@@ -105,18 +106,18 @@ class DetailViewController: UIViewController {
         
     }
     
-//    func bindViewModel(){
-//        viewModel.loadData()
-//        viewModel.itemMovie.bind { chars in
-//            DispatchQueue.main.async {
-//                self.movieTitle.text = chars.fullTitle
-//                self.movieInfrom.text = chars.type
-//                self.moviePoster.kf.indicatorType = .activity
-//                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
-//            }
-//        }
-//    }
-
+    //    func bindViewModel(){
+    //        viewModel.loadData()
+    //        viewModel.itemMovie.bind { chars in
+    //            DispatchQueue.main.async {
+    //                self.movieTitle.text = chars.fullTitle
+    //                self.movieInfrom.text = chars.type
+    //                self.moviePoster.kf.indicatorType = .activity
+    //                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
+    //            }
+    //        }
+    //    }
+    
     func bindViewModel(){
         viewModel.loadData()
         viewModel.items.bind { chars in
@@ -134,4 +135,14 @@ class DetailViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    var validator = true
+    @objc func didFavSelected(){
+        if validator{
+            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            validator = false
+        }else{
+            saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            validator = true
+        }
+    }
 }

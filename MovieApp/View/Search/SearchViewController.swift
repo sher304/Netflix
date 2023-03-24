@@ -105,7 +105,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchTableCell()
         if searchViewModel.didChanged ?? false{
-//            let items = searchViewModel.sortedMovies[indexPath.row]
+            //            let items = searchViewModel.sortedMovies[indexPath.row]
             let items = searchViewModel.sortedItems[indexPath.row]
             cell.fillData(title: items.name, url: items.image)
         }else{
