@@ -27,7 +27,6 @@ class DetailViewModel: DetailViewModelDelegate {
     
     func getId(id: String) {
         self.id = id
-        print(id)
     }
     
 //    var items = Dynamic(SingleTest(id: 0, name: "", status: "", species: "", type: "", gender: "", origin: LocationSingle(name: "", url: ""), location: LocationSingle(name: "", url: ""), image: "", episode: [], url: "", created: ""))
@@ -42,7 +41,6 @@ class DetailViewModel: DetailViewModelDelegate {
     func loadData() {
         network.getMovie(id: id ?? "3") { single in
             self.itemMovie.value = single
-            print(single)
         }
     }
     

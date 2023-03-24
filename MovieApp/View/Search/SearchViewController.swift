@@ -39,6 +39,14 @@ class SearchViewController: UIViewController {
         return tableV
     }()
     
+    private lazy var dismissButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         binder()
@@ -46,11 +54,19 @@ class SearchViewController: UIViewController {
     }
     
     private func setupConstraints(){
+        
+        view.addSubview(dismissButton)
+        dismissButton.snp.makeConstraints { make in
+            make.leading.equalTo(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
+            make.width.height.equalTo(35)
+        }
+        
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(52)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(dismissButton.snp.bottom).offset(10)
         }
         
         view.addSubview(searchTable)
@@ -58,6 +74,7 @@ class SearchViewController: UIViewController {
             make.top.equalTo(searchBar.snp.bottom).offset(15)
             make.leading.bottom.trailing.equalToSuperview()
         }
+        
     }
     
     func binder(){
@@ -67,6 +84,10 @@ class SearchViewController: UIViewController {
                 self.searchTable.reloadData()
             }
         }
+    }
+    
+    @objc func dismissTapped(){
+        dismiss(animated: true)
     }
     
 }
