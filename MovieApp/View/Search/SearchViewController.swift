@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Hero
 import SnapKit
 
 class SearchViewController: UIViewController {
@@ -95,20 +96,21 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchViewModel.didChanged ?? false{
-            return searchViewModel.sortedMovies.count
+            return searchViewModel.sortedItems.count
         }else{
-            return searchViewModel.items.value.items.count
+            return searchViewModel.items.value.results.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchTableCell()
         if searchViewModel.didChanged ?? false{
-            let items = searchViewModel.sortedMovies[indexPath.row]
-            cell.fillData(title: items.fullTitle, url: items.image)
+//            let items = searchViewModel.sortedMovies[indexPath.row]
+            let items = searchViewModel.sortedItems[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
         }else{
-            let items = searchViewModel.items.value.items[indexPath.row]
-            cell.fillData(title: items.fullTitle, url: items.image)
+            let items = searchViewModel.items.value.results[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
         }
         return cell
     }
@@ -123,6 +125,13 @@ extension SearchViewController: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchViewModel.setTitle(title: searchBar.text ?? "")
         binder()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.fetchId(id: String(indexPath.row + 1))
+        vc.hero.isEnabled = true
+        present(vc, animated: true)
     }
     
 }

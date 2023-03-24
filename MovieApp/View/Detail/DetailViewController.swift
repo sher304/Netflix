@@ -105,17 +105,30 @@ class DetailViewController: UIViewController {
         
     }
     
+//    func bindViewModel(){
+//        viewModel.loadData()
+//        viewModel.itemMovie.bind { chars in
+//            DispatchQueue.main.async {
+//                self.movieTitle.text = chars.fullTitle
+//                self.movieInfrom.text = chars.type
+//                self.moviePoster.kf.indicatorType = .activity
+//                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
+//            }
+//        }
+//    }
+
     func bindViewModel(){
         viewModel.loadData()
-        viewModel.itemMovie.bind { chars in
+        viewModel.items.bind { chars in
             DispatchQueue.main.async {
-                self.movieTitle.text = chars.fullTitle
+                self.movieTitle.text = chars.name
                 self.movieInfrom.text = chars.type
                 self.moviePoster.kf.indicatorType = .activity
-                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
+                self.moviePoster.kf.setImage(with: URL(string: chars.image ?? ""))
             }
         }
     }
+    
     
     @objc func dismissTapped(){
         dismiss(animated: true)
