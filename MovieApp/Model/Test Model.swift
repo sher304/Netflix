@@ -10,7 +10,7 @@ import Foundation
 // MARK: - TestAll
 struct TestAll: Codable {
     let info: Info
-    let results: [Result]
+    let results: [ResultTest]
 }
 
 // MARK: - Info
@@ -21,7 +21,7 @@ struct Info: Codable {
 }
 
 // MARK: - Result
-struct Result: Codable {
+struct ResultTest: Codable {
     let id: Int
     let name: String
     let status: Status

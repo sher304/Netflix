@@ -11,6 +11,7 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
+    let isFavorite = UserDefaults.standard.dictionary(forKey: "isFavorite") as? [String: Bool]
     
     private lazy var viewModel: DetailViewModel = {
         return DetailViewModel()
@@ -129,20 +130,23 @@ class DetailViewController: UIViewController {
             }
         }
     }
-    
-    
+
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
     
-    var validator = true
     @objc func didFavSelected(){
-        if validator{
+        saveButton.isSelected = !saveButton.isSelected
+        if saveButton.isSelected {
             saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-            validator = false
+            
+            //MARK: Save Id of Data
+            viewModel.saveId(id: viewModel.items.value.id.description)
+            viewModel.retrive()
         }else{
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
-            validator = true
+//            print("Deleted")
+//            viewModel.retrive()
         }
     }
 }

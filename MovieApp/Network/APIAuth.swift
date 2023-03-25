@@ -7,19 +7,9 @@
 
 import Foundation
 
+class APIAuth {
 
-//protocol APIAuthDelegate{
-//    
-//    func getTopMovies(completion: @escaping(Result<Movies, Error>) -> Void)
-//    
-//}
-//
-//class APIAuth: APIAuthDelegate {
-//    
-//    let urlFactory = URLFactory()
-//    
-//    func getTopMovies(completion: @escaping (Result<Movies, Error>) -> Void) {
-//        let url = URLRequest(url: urlFactory.getTopMovies)
-//        NetworkService.baseRequest(url: url, method: "GET", completion: completion)
-//    }
-//}
+    func getTopMovies(id: String, completion: @escaping (Result<SingleTest, Error>) -> Void) {
+        Network.getCharacter(id: id, method: "GET", completion: completion)
+    }
+}

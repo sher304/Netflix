@@ -13,8 +13,6 @@ protocol NetwrokService {
     //    func getMovie(id: String?, completion: @escaping(SearchModel) -> Void )
     
     func getAllTest(completion: @escaping(TestAll) -> Void)
-    func getCharacter(id: String, completion: @escaping(SingleTest) -> Void)
-    
     
 }
 
@@ -58,14 +56,22 @@ class Network: NetwrokService {
     }
     
     
-    func getCharacter(id: String, completion: @escaping(SingleTest) -> Void){
+    static func getCharacter<T: Codable>(id: String, method: String, completion: @escaping(Result<T, Error>) -> Void){
         guard let url = URL(string: "https://rickandmortyapi.com/api/character/\(id)") else { return }
         
         AF.request(url).response { responce in
             DispatchQueue.main.async {
-                guard let data = responce.data else { return }
-                guard let jsonObj = try? JSONDecoder().decode(SingleTest.self, from: data) else { return }
-                completion(jsonObj)
+                do{
+                    guard let data = responce.data else { return }
+                    guard let jsonObj = try? JSONDecoder().decode(T.self, from: data) else {
+                        print("ERROR NETOWRK")
+                        return }
+                    completion(.success(jsonObj))
+                }catch{
+                    print("ERRORR")
+                    completion(.failure(Error.self as! Error))
+                }
+                
             }
         }
         

@@ -16,7 +16,7 @@ protocol SearchViewModelDelegate {
 class SearchViewModel: SearchViewModelDelegate{
     
     var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
-    var sortedItems: [Result] = []
+    var sortedItems: [ResultTest] = []
     
 //    var items = Dynamic(Movies(items: [], errorMessage: ""))
 //    var sortedMovies: [Item] = []
