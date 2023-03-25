@@ -130,7 +130,7 @@ class DetailViewController: UIViewController {
             }
         }
     }
-
+    
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
@@ -140,20 +140,21 @@ class DetailViewController: UIViewController {
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         if saveButton.isSelected {
             saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-            
-            //MARK: Save Id of Data
-//            viewModel.saveId(id: viewModel.items.value.id.description)
-            data?.forEach({ item in
-                if item != viewModel.items.value.id.description{
-                    viewModel.saveId(id: viewModel.items.value.id.description)
-                    print(item)
-                }
-            })
-        }else{
+            if let id: String = data?.first(where: { item in
+                item == viewModel.items.value.id.description
+            }) {
+                print("HAS")
+                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                viewModel.retrive()
+            } else {
+                print("SAVESAVEVASVEASVEASVAE")
+                viewModel.saveId(id: viewModel.items.value.id.description)
+            }
+        }else {
+            // delete
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
-            print(data)
-//            print("Deleted")
-//            viewModel.retrive()
+            print("DEL")
+
         }
     }
 }

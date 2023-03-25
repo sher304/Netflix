@@ -22,8 +22,6 @@ class DetailViewModel: DetailViewModelDelegate{
         return Network()
     }()
     
-    
-    
     var id: String?
     func getId(id: String) {
         self.id = id
