@@ -11,11 +11,11 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
-    let isFavorite = UserDefaults.standard.dictionary(forKey: "isFavorite") as? [String: Bool]
+//    private lazy var viewModel: DetailViewModel = {
+//        return DetailViewModel()
+//    }()
     
-    private lazy var viewModel: DetailViewModel = {
-        return DetailViewModel()
-    }()
+    private var viewModel = DetailViewModel.shared
     
     private lazy var moviePoster: UIImageView = {
         let imageV = UIImageView()
