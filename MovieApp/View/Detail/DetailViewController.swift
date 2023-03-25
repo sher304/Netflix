@@ -11,6 +11,7 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
+    let isFavorite = UserDefaults.standard.dictionary(forKey: "isFavorite") as? [String: Bool]
     
     private lazy var viewModel: DetailViewModel = {
         return DetailViewModel()
@@ -45,6 +46,7 @@ class DetailViewController: UIViewController {
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .white
         button.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(didFavSelected), for: .touchUpInside)
         return button
     }()
     
@@ -105,22 +107,46 @@ class DetailViewController: UIViewController {
         
     }
     
+    //    func bindViewModel(){
+    //        viewModel.loadData()
+    //        viewModel.itemMovie.bind { chars in
+    //            DispatchQueue.main.async {
+    //                self.movieTitle.text = chars.fullTitle
+    //                self.movieInfrom.text = chars.type
+    //                self.moviePoster.kf.indicatorType = .activity
+    //                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
+    //            }
+    //        }
+    //    }
+    
     func bindViewModel(){
         viewModel.loadData()
-        viewModel.itemMovie.bind { chars in
-            print(chars)
+        viewModel.items.bind { chars in
             DispatchQueue.main.async {
-                print(chars.fullTitle)
-                self.movieTitle.text = chars.fullTitle
+                self.movieTitle.text = chars.name
                 self.movieInfrom.text = chars.type
                 self.moviePoster.kf.indicatorType = .activity
-                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
+                self.moviePoster.kf.setImage(with: URL(string: chars.image ?? ""))
             }
         }
     }
-    
+
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
     
+    @objc func didFavSelected(){
+        saveButton.isSelected = !saveButton.isSelected
+        if saveButton.isSelected {
+            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            
+            //MARK: Save Id of Data
+            viewModel.saveId(id: viewModel.items.value.id.description)
+            viewModel.retrive()
+        }else{
+            saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+//            print("Deleted")
+//            viewModel.retrive()
+        }
+    }
 }

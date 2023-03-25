@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Hero
 import SnapKit
 
 class SearchViewController: UIViewController {
@@ -39,6 +40,14 @@ class SearchViewController: UIViewController {
         return tableV
     }()
     
+    private lazy var dismissButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         binder()
@@ -46,11 +55,19 @@ class SearchViewController: UIViewController {
     }
     
     private func setupConstraints(){
+        
+        view.addSubview(dismissButton)
+        dismissButton.snp.makeConstraints { make in
+            make.leading.equalTo(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
+            make.width.height.equalTo(35)
+        }
+        
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(52)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(dismissButton.snp.bottom).offset(10)
         }
         
         view.addSubview(searchTable)
@@ -58,6 +75,7 @@ class SearchViewController: UIViewController {
             make.top.equalTo(searchBar.snp.bottom).offset(15)
             make.leading.bottom.trailing.equalToSuperview()
         }
+        
     }
     
     func binder(){
@@ -69,25 +87,30 @@ class SearchViewController: UIViewController {
         }
     }
     
+    @objc func dismissTapped(){
+        dismiss(animated: true)
+    }
+    
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchViewModel.didChanged ?? false{
-            return searchViewModel.sortedMovies.count
+            return searchViewModel.sortedItems.count
         }else{
-            return searchViewModel.items.value.items.count
+            return searchViewModel.items.value.results.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchTableCell()
         if searchViewModel.didChanged ?? false{
-            let items = searchViewModel.items.value.items[indexPath.row]
-            cell.fillData(title: items.fullTitle, url: items.image)
+            //            let items = searchViewModel.sortedMovies[indexPath.row]
+            let items = searchViewModel.sortedItems[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
         }else{
-            let items = searchViewModel.items.value.items[indexPath.row]
-            cell.fillData(title: items.fullTitle, url: items.image)
+            let items = searchViewModel.items.value.results[indexPath.row]
+            cell.fillData(title: items.name, url: items.image)
         }
         return cell
     }
@@ -102,6 +125,13 @@ extension SearchViewController: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchViewModel.setTitle(title: searchBar.text ?? "")
         binder()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.fetchId(id: String(indexPath.row + 1))
+        vc.hero.isEnabled = true
+        present(vc, animated: true)
     }
     
 }

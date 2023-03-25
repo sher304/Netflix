@@ -15,11 +15,11 @@ protocol SearchViewModelDelegate {
 
 class SearchViewModel: SearchViewModelDelegate{
     
-//    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
-//    var sortedItems: [Result] = []
+    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
+    var sortedItems: [ResultTest] = []
     
-    var items = Dynamic(Movies(items: [], errorMessage: ""))
-    var sortedMovies: [Item] = []
+//    var items = Dynamic(Movies(items: [], errorMessage: ""))
+//    var sortedMovies: [Item] = []
     
     private lazy var network: NetwrokService = {
         return Network()
@@ -29,8 +29,11 @@ class SearchViewModel: SearchViewModelDelegate{
     var didChanged: Bool?
     
     func shareData(){
-        network.getMovies { items in
-            self.items.value = items
+//        network.getMovies { items in
+//            self.items.value = items
+//        }
+        network.getAllTest { test in
+            self.items.value = test
         }
     }
     
@@ -40,8 +43,13 @@ class SearchViewModel: SearchViewModelDelegate{
         filterData()
     }
     
+//    func filterData(){
+//        self.sortedMovies = self.items.value.items.filter({$0.fullTitle.prefix(self.title?.count ?? 0) == self.title ?? ""})
+//        print(sortedMovies)
+//    }
+    
     func filterData(){
-        self.sortedMovies = self.items.value.items.filter({$0.title.prefix(self.title?.count ?? 0) == self.title ?? ""})
+        self.sortedItems = self.items.value.results.filter({$0.name.prefix(self.title?.count ?? 0) == self.title ?? ""})
     }
     
 }

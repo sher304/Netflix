@@ -18,7 +18,8 @@ class MoviesTableViewCell: UITableViewCell {
     //MARK: THE CELL'S IDENTIFIER
     static let identifier = "MoviesCell"
     
-    var items: Movies? = nil
+//    var items: Movies? = nil
+    var items: TestAll? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -52,7 +53,16 @@ class MoviesTableViewCell: UITableViewCell {
         }
     }
     
-//    func fetchData(data: [Item], delegate: MovieTableDelegate){
+    func fetchData(data: TestAll, delegate: MovieTableDelegate){
+        DispatchQueue.main.async { [self] in
+            items = data
+            self.delegate = delegate
+            moviesCollection.reloadData()
+
+        }
+    }
+    
+//    func fetchData(data: Movies, delegate: MovieTableDelegate){
 //        DispatchQueue.main.async { [self] in
 //            items = data
 //            self.delegate = delegate
@@ -61,15 +71,6 @@ class MoviesTableViewCell: UITableViewCell {
 //        }
 //    }
     
-    func fetchData(data: Movies, delegate: MovieTableDelegate){
-        DispatchQueue.main.async { [self] in
-            items = data
-            self.delegate = delegate
-            moviesCollection.reloadData()
-            
-        }
-    }
-    
 }
 
 //MARK: COLLECTION VIEW SETTINGS
@@ -77,7 +78,8 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //MARK: COLLECTION VIEW'S ROW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items?.items.count ?? 0
+//        return items?.items.count ?? 0
+        return items?.results.count ?? 0
     }
     
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
@@ -85,11 +87,12 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
         
         
-        guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
-        let titles = items.fullTitle
-        let crews = items.crew
+//        guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
+        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
+        let titles = items.name
+        let crews = items.created
         let posterURL = items.image
-        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.imDBRating)
+        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.type)
         return cell
     }
     
