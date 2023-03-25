@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Hero
 import SnapKit
 
 class SaveViewController: UIViewController {
+    
+    private lazy var viewModel: SavedViewModel = {
+        return SavedViewModel()
+    }()
     
     private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 450)
     
@@ -52,10 +57,10 @@ class SaveViewController: UIViewController {
         tableV.backgroundColor  = .black
         return tableV
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        binder()
         setupConstraints()
     }
     
@@ -83,7 +88,16 @@ class SaveViewController: UIViewController {
             make.top.equalTo(netflixLogo.snp.bottom).offset(25)
         }
     }
-
+    
+    func binder(){
+        viewModel.loadView()
+        viewModel.items.bind { _ in
+            DispatchQueue.main.async {
+                self.savedTable.reloadData()
+            }
+        }
+    }
+    
 }
 
 
@@ -94,7 +108,7 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SavedTableCell()
-        
+        cell.fetchData(data: viewModel.items.value, deleagate: self)
         return cell
     }
     
@@ -104,5 +118,21 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource{
 }
 
 extension SearchViewController: UIScrollViewDelegate {
+    
+}
+
+extension SaveViewController: MovieTableDelegate{
+    func didSelected(indx: String) {
+        let vc = DetailViewController()
+        vc.hero.isEnabled = true
+        vc.hero.modalAnimationType = .slide(direction: .up)
+        viewModel.items.value.results.forEach { i in
+            if i.id.description == indx{
+                vc.fetchId(id: i.id.description)
+            }
+        }
+        present(vc, animated: true)
+    }
+    
     
 }

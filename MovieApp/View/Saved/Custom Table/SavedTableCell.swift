@@ -14,6 +14,10 @@ class SavedTableCell: UITableViewCell {
     
     static let identifier = "SavedTableCell"
     
+    var items: TestAll? = nil
+    
+    var delegate: MovieTableDelegate? = nil
+    
     private lazy var savedCollectioV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -39,23 +43,37 @@ class SavedTableCell: UITableViewCell {
         }
     }
     
+    func fetchData(data: TestAll, deleagate: MovieTableDelegate){
+        DispatchQueue.main.async {
+            self.items = data
+            self.delegate = deleagate
+            self.savedCollectioV.reloadData()
+        }
+    }
+    
 }
 
 
 extension SavedTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return items?.results.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedCollectionCell.identifier, for: indexPath) as? SavedCollectionCell else { return SavedCollectionCell()}
         
+        let items = items?.results[indexPath.row]
+        cell.fillData(title: items?.name, imageURL: items?.image, crew: items?.type)
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 153, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelected(indx: (indexPath.row + 1).description)
     }
 }
 

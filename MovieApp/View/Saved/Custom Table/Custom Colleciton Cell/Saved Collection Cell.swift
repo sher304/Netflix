@@ -7,12 +7,13 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 import SnapKit
 
 class SavedCollectionCell: UICollectionViewCell {
     
     static let identifier = "SavedCollection"
-
+    
     private lazy var posterImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .green
@@ -65,11 +66,13 @@ class SavedCollectionCell: UICollectionViewCell {
         }
     }
     
-    func fillData(title: String, imageURL: String, crew: String){
+    func fillData(title: String?, imageURL: String?, crew: String?){
         DispatchQueue.main.async {
             self.movieTite.text = title
             self.movieCrew.text = crew
+            self.posterImage.kf.indicatorType = .activity
+            self.posterImage.kf.setImage(with: URL(string: imageURL ?? ""))
         }
     }
-
+    
 }
