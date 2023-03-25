@@ -25,6 +25,7 @@ class SavedTableCell: UITableViewCell {
         collectionV.register(SavedCollectionCell.self, forCellWithReuseIdentifier: SavedCollectionCell.identifier)
         collectionV.delegate = self
         collectionV.dataSource = self
+        collectionV.backgroundColor = .black
         return collectionV
     }()
     
