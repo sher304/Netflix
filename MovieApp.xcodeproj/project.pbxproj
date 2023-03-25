@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		600B44CE29CEEE0D0055030B /* TapbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B44CD29CEEE0D0055030B /* TapbarViewController.swift */; };
+		600B44D129CEFB710055030B /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B44D029CEFB710055030B /* SaveViewController.swift */; };
 		60B899DE29C6183F001FDE36 /* Movies Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B899DD29C6183F001FDE36 /* Movies Model.swift */; };
 		60B899E129C618B4001FDE36 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B899E029C618B4001FDE36 /* Dynamic.swift */; };
 		60B899E429C64414001FDE36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B899E329C64414001FDE36 /* Extensions.swift */; };
@@ -35,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		3D580CD8938EE7C75A8AD162 /* Pods_MovieApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		600B44CD29CEEE0D0055030B /* TapbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapbarViewController.swift; sourceTree = "<group>"; };
+		600B44D029CEFB710055030B /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 		60B899DD29C6183F001FDE36 /* Movies Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movies Model.swift"; sourceTree = "<group>"; };
 		60B899E029C618B4001FDE36 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		60B899E329C64414001FDE36 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -76,6 +80,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		600B44CC29CEEDE30055030B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				600B44CD29CEEE0D0055030B /* TapbarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		600B44CF29CEFB630055030B /* Saved */ = {
+			isa = PBXGroup;
+			children = (
+				600B44D029CEFB710055030B /* SaveViewController.swift */,
+			);
+			path = Saved;
+			sourceTree = "<group>";
+		};
 		60B899DC29C61708001FDE36 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,7 +212,6 @@
 				60C3B10229C615B700365BD4 /* ViewModel */,
 				60C3B10129C615B500365BD4 /* Model */,
 				60C3B10029C615B200365BD4 /* View */,
-				60C3B0FF29C615AF00365BD4 /* Extension */,
 				60C3B0F429C614BA00365BD4 /* Assets.xcassets */,
 				60C3B0F929C614BA00365BD4 /* Info.plist */,
 				60B89A0829CE2CE3001FDE36 /* Data.swift */,
@@ -200,16 +219,11 @@
 			path = MovieApp;
 			sourceTree = "<group>";
 		};
-		60C3B0FF29C615AF00365BD4 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 		60C3B10029C615B200365BD4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				600B44CF29CEFB630055030B /* Saved */,
+				600B44CC29CEEDE30055030B /* TabBar */,
 				60B899F229C703C5001FDE36 /* Detail */,
 				60B899EC29C6F62B001FDE36 /* Search */,
 				60B899E529C6E03F001FDE36 /* Home */,
@@ -372,6 +386,7 @@
 				60B899F429C703CF001FDE36 /* DetailViewController.swift in Sources */,
 				60C3B0F029C614B900365BD4 /* HomeViewController.swift in Sources */,
 				60B899F729C715CA001FDE36 /* NetworkService.swift in Sources */,
+				600B44D129CEFB710055030B /* SaveViewController.swift in Sources */,
 				60B89A0729CC8471001FDE36 /* SearchModel.swift in Sources */,
 				60B89A0529CC8155001FDE36 /* SearchViewModel.swift in Sources */,
 				60B899E429C64414001FDE36 /* Extensions.swift in Sources */,
@@ -381,6 +396,7 @@
 				60B89A0329CA284A001FDE36 /* Test Model.swift in Sources */,
 				60B899EE29C6F64C001FDE36 /* SearchViewController.swift in Sources */,
 				60B89A0929CE2CE3001FDE36 /* Data.swift in Sources */,
+				600B44CE29CEEE0D0055030B /* TapbarViewController.swift in Sources */,
 				60B899DE29C6183F001FDE36 /* Movies Model.swift in Sources */,
 				60B899F929C71CDC001FDE36 /* HomeViewModel.swift in Sources */,
 				60B899EB29C6E70B001FDE36 /* MoviesCollectionCell.swift in Sources */,

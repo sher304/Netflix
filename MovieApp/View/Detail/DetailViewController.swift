@@ -137,14 +137,21 @@ class DetailViewController: UIViewController {
     
     @objc func didFavSelected(){
         saveButton.isSelected = !saveButton.isSelected
+        let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         if saveButton.isSelected {
             saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             
             //MARK: Save Id of Data
-            viewModel.saveId(id: viewModel.items.value.id.description)
-            viewModel.retrive()
+//            viewModel.saveId(id: viewModel.items.value.id.description)
+            data?.forEach({ item in
+                if item != viewModel.items.value.id.description{
+                    viewModel.saveId(id: viewModel.items.value.id.description)
+                    print(item)
+                }
+            })
         }else{
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            print(data)
 //            print("Deleted")
 //            viewModel.retrive()
         }
