@@ -14,6 +14,8 @@ protocol DetailViewModelDelegate {
 
 class DetailViewModel: DetailViewModelDelegate{
     
+    static let shared = DetailViewModel()
+    
     //        var itemMovie = Dynamic(SearchModel(id: "", title: "", originalTitle: "", fullTitle: "", type: "", year: "", image: "", releaseDate: "", runtimeMins: "", runtimeStr: "", plot: "", plotLocal: "", plotLocalIsRTL: Bool(), awards: "", directors: "", directorList: [], writers: "", writerList: [], stars: "", starList: [], actorList: [], fullCast: .none, genres: "", genreList: [], companies: "", companyList: [], countries: "", countryList: [], languages: "", languageList: [], contentRating: "", imDBRating: "", imDBRatingVotes: "", metacriticRating: "", ratings: .none, wikipedia: .none, posters: .none, images: .none, trailer: .none, boxOffice: BoxOffice(budget: "", openingWeekendUSA: "", grossUSA: "", cumulativeWorldwideGross: ""), tagline: .none, keywords: "", keywordList: [], similars: [], tvSeriesInfo: .none, tvEpisodeInfo: .none, errorMessage: ""))
     
     //    var itemMovie = Dynamic(SearchModel(imDBID: "", title: "", fullTitle: "", type: "", year: "", directors: Directors(job: "", items: []), writers: Directors(job: "", items: []), actors: [], others: [], errorMessage: ""))
@@ -48,11 +50,18 @@ class DetailViewModel: DetailViewModelDelegate{
     func saveId(id: String){
         data.append(id)
         defautls.set(data, forKey: "MovieIds")
-        print(id)
+        data = defautls.array(forKey: "MovieIds") as? [String] ?? []
     }
     
     func retrive(){
         print(defautls.array(forKey: "MovieIds"))
+    }
+    
+    func delete(id: String){
+        let filtredData = data.filter {$0 != id }
+        print(filtredData, "filterData")
+        self.data = filtredData
+        defautls.set(data, forKey: "MovieIds")
     }
     
 }

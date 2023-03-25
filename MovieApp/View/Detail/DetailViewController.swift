@@ -11,11 +11,11 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
-    let isFavorite = UserDefaults.standard.dictionary(forKey: "isFavorite") as? [String: Bool]
+    //    private lazy var viewModel: DetailViewModel = {
+    //        return DetailViewModel()
+    //    }()
     
-    private lazy var viewModel: DetailViewModel = {
-        return DetailViewModel()
-    }()
+    private var viewModel = DetailViewModel.shared
     
     private lazy var moviePoster: UIImageView = {
         let imageV = UIImageView()
@@ -100,6 +100,8 @@ class DetailViewController: UIViewController {
             make.height.width.equalTo(40)
             make.centerY.equalTo(movieTitle)
         }
+
+        checkIsSaved()
     }
     
     func fetchId(id: String){
@@ -131,6 +133,16 @@ class DetailViewController: UIViewController {
         }
     }
     
+    func checkIsSaved(){
+        let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
+        print(data, "CHECKER ")
+        data?.forEach({ id in
+            if id == viewModel.items.value.id.description{
+                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }
+        })
+    }
+    
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
@@ -139,22 +151,25 @@ class DetailViewController: UIViewController {
         saveButton.isSelected = !saveButton.isSelected
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         if saveButton.isSelected {
-            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+//            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             if let id: String = data?.first(where: { item in
                 item == viewModel.items.value.id.description
             }) {
-                print("HAS")
-                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-                viewModel.retrive()
+                print("HAS DATA")
+//                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                print(viewModel.retrive())
             } else {
-                print("SAVESAVEVASVEASVEASVAE")
+                //MARK: SAVE
+                print("SAVE DATA")
                 viewModel.saveId(id: viewModel.items.value.id.description)
+                print(viewModel.retrive())
             }
         }else {
-            // delete
+            //MARK: Delete
+            print("DELETE DATA")
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
-            print("DEL")
-
+            viewModel.delete(id: viewModel.items.value.id.description)
+            print(viewModel.retrive())
         }
     }
 }
