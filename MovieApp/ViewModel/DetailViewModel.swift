@@ -48,13 +48,21 @@ class DetailViewModel: DetailViewModelDelegate{
     var data: [String] = []
     let defautls = UserDefaults.standard
     func saveId(id: String){
+        print(id)
         data.append(id)
         defautls.set(data, forKey: "MovieIds")
-        print(id)
+        data = defautls.array(forKey: "MovieIds") as? [String] ?? []
     }
     
     func retrive(){
         print(defautls.array(forKey: "MovieIds"))
+    }
+    
+    func delete(id: String){
+        let filtredData = data.filter {$0 != id }
+        print(filtredData, "filterData")
+        self.data = filtredData
+        defautls.set(data, forKey: "MovieIds")
     }
     
 }
