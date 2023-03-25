@@ -135,7 +135,7 @@ class DetailViewController: UIViewController {
     
     func checkIsSaved(){
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
-        print(data)
+        print(data, "CHECKER ")
         data?.forEach({ id in
             if id == viewModel.items.value.id.description{
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
@@ -151,19 +151,22 @@ class DetailViewController: UIViewController {
         saveButton.isSelected = !saveButton.isSelected
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         if saveButton.isSelected {
-            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+//            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             if let id: String = data?.first(where: { item in
                 item == viewModel.items.value.id.description
             }) {
-                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                print("HAS DATA")
+//                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                 print(viewModel.retrive())
             } else {
                 //MARK: SAVE
+                print("SAVE DATA")
                 viewModel.saveId(id: viewModel.items.value.id.description)
                 print(viewModel.retrive())
             }
         }else {
             //MARK: Delete
+            print("DELETE DATA")
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
             viewModel.delete(id: viewModel.items.value.id.description)
             print(viewModel.retrive())

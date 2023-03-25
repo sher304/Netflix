@@ -48,7 +48,6 @@ class DetailViewModel: DetailViewModelDelegate{
     var data: [String] = []
     let defautls = UserDefaults.standard
     func saveId(id: String){
-        print(id)
         data.append(id)
         defautls.set(data, forKey: "MovieIds")
         data = defautls.array(forKey: "MovieIds") as? [String] ?? []
