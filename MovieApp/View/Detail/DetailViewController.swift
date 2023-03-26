@@ -100,8 +100,7 @@ class DetailViewController: UIViewController {
             make.height.width.equalTo(40)
             make.centerY.equalTo(movieTitle)
         }
-
-        checkIsSaved()
+        
     }
     
     func fetchId(id: String){
@@ -128,7 +127,8 @@ class DetailViewController: UIViewController {
                 self.movieTitle.text = chars.name
                 self.movieInfrom.text = chars.type
                 self.moviePoster.kf.indicatorType = .activity
-                self.moviePoster.kf.setImage(with: URL(string: chars.image ?? ""))
+                self.moviePoster.kf.setImage(with: URL(string: chars.image))
+                self.checkIsSaved()
             }
         }
     }
@@ -139,7 +139,12 @@ class DetailViewController: UIViewController {
         print(data, "CHECKER ")
         data?.forEach({ id in
             if id == viewModel.items.value.id.description{
+                print(id, "if", viewModel.items.value.id)
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                
+            }else{
+                print(id, "else", viewModel.items.value.id)
+                saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
             }
         })
     }
@@ -152,25 +157,21 @@ class DetailViewController: UIViewController {
         saveButton.isSelected = !saveButton.isSelected
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         if saveButton.isSelected {
-//            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             if let id: String = data?.first(where: { item in
                 item == viewModel.items.value.id.description
             }) {
                 print("HAS DATA")
-//                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-                print(viewModel.retrive())
+                bindViewModel()
             } else {
                 //MARK: SAVE
                 print("SAVE DATA")
                 viewModel.saveId(id: viewModel.items.value.id.description)
-                print(viewModel.retrive())
             }
         }else {
             //MARK: Delete
             print("DELETE DATA")
-            saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
             viewModel.delete(id: viewModel.items.value.id.description)
-            print(viewModel.retrive())
         }
     }
 }

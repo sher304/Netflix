@@ -21,9 +21,21 @@ class SavedViewModel: SavedViewModelDelegate {
         return Network()
     }()
     
+    private var detailViewModel = DetailViewModel.shared
+    
+    
+    func sortItems(data: TestAll){
+        let dataB = detailViewModel.defautls.array(forKey: "MovieIds") as? [String]
+        dataB?.forEach({ id in
+            let dublicate = data.results.filter({$0.id.description == id})
+            self.items.value.results = dublicate
+        })
+    }
+    
+    
     func loadView(){
         network.getAllTest { items in
-            self.items.value = items
+            self.sortItems(data: items)
         }
     }
 }

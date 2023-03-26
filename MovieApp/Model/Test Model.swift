@@ -10,7 +10,7 @@ import Foundation
 // MARK: - TestAll
 struct TestAll: Codable {
     let info: Info
-    let results: [ResultTest]
+    var results: [ResultTest]
 }
 
 // MARK: - Info
