@@ -135,6 +135,7 @@ class DetailViewController: UIViewController {
     
     func checkIsSaved(){
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
+        self.viewModel.data = data ?? []
         print(data, "CHECKER ")
         data?.forEach({ id in
             if id == viewModel.items.value.id.description{
