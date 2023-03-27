@@ -98,7 +98,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
         if searchViewModel.didChanged ?? false{
             return searchViewModel.sortedItems.count
         }else{
-            return searchViewModel.items.value.results.count
+            return searchViewModel.sortedItems.count
         }
     }
     

@@ -105,9 +105,7 @@ class DetailViewController: UIViewController {
     
     func fetchId(id: String){
         viewModel.id = id
-        
     }
-    
     //    func bindViewModel(){
     //        viewModel.loadData()
     //        viewModel.itemMovie.bind { chars in
@@ -133,22 +131,24 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: Check is Movie saved
     func checkIsSaved(){
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         self.viewModel.data = data ?? []
         for i in data ?? []{
             if i == viewModel.items.value.id.description{
-                print(i, "if", viewModel.items.value.id)
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                 break
             }
         }
     }
     
+    //MARK: Close View
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
     
+    //MARK: Save Or Delete
     @objc func didFavSelected(){
         saveButton.isSelected = !saveButton.isSelected
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
@@ -158,15 +158,17 @@ class DetailViewController: UIViewController {
                 item == viewModel.items.value.id.description
             }) {
                 print("HAS DATA")
-                bindViewModel()
+//                bindViewModel()
             } else {
                 //MARK: SAVE
                 print("SAVE DATA")
                 viewModel.saveId(id: viewModel.items.value.id.description)
+                print(data, "dadatatatat")
             }
         }else {
             //MARK: Delete
             print("DELETE DATA")
+            saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
             viewModel.delete(id: viewModel.items.value.id.description)
         }
     }
