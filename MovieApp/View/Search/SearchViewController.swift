@@ -129,7 +129,8 @@ extension SearchViewController: UISearchBarDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.fetchId(id: String(indexPath.row + 1))
+        let items = searchViewModel.sortedItems[indexPath.row]
+        vc.fetchId(id: items.id.description)
         vc.hero.isEnabled = true
         present(vc, animated: true)
     }
