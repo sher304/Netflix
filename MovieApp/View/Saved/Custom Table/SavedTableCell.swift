@@ -14,7 +14,7 @@ class SavedTableCell: UITableViewCell {
     
     static let identifier = "SavedTableCell"
     
-    var items: TestAll? = nil
+    var items: [ResultTest]? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -44,8 +44,9 @@ class SavedTableCell: UITableViewCell {
         }
     }
     
-    func fetchData(data: TestAll, deleagate: MovieTableDelegate){
+    func fetchData(data: [ResultTest], deleagate: MovieTableDelegate){
         DispatchQueue.main.async {
+//            print(data, "saved Table")
             self.items = data
             self.delegate = deleagate
             self.savedCollectioV.reloadData()
@@ -57,13 +58,14 @@ class SavedTableCell: UITableViewCell {
 
 extension SavedTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items?.results.count ?? 0
+//        print(items?.count, "count table delegate")
+        return items?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedCollectionCell.identifier, for: indexPath) as? SavedCollectionCell else { return SavedCollectionCell()}
         
-        let items = items?.results[indexPath.row]
+        let items = items?[indexPath.row]
         cell.fillData(title: items?.name, imageURL: items?.image, crew: items?.type)
         return cell
     }
@@ -74,7 +76,8 @@ extension SavedTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didSelected(indx: (indexPath.row + 1).description)
+        let data = items?[indexPath.row].id
+        delegate?.didSelected(indx: (data)?.description ?? "")
     }
 }
 
