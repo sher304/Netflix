@@ -26,8 +26,6 @@ class SearchViewModel: SearchViewModelDelegate{
     }()
     
     var title: String?
-    var didChanged: Bool?
-    
     func shareData(){
 //        network.getMovies { items in
 //            self.items.value = items
@@ -39,17 +37,11 @@ class SearchViewModel: SearchViewModelDelegate{
     
     func setTitle(title: String){
         self.title = title
-        self.didChanged = true
         filterData()
     }
     
-//    func filterData(){
-//        self.sortedMovies = self.items.value.items.filter({$0.fullTitle.prefix(self.title?.count ?? 0) == self.title ?? ""})
-//        print(sortedMovies)
-//    }
-    
     func filterData(){
-        self.sortedItems = self.items.value.results.filter({$0.name.prefix(self.title?.count ?? 0) == self.title ?? ""})
+        self.sortedItems = self.items.value.results.filter({$0.name.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
     }
     
 }
