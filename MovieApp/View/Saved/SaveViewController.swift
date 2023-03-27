@@ -106,7 +106,6 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SavedTableCell()
         cell.fetchData(data: viewModel.filtredData.value, deleagate: self)
-        print(viewModel.filtredData.value, "TABLE DELEGATE")
         return cell
     }
     

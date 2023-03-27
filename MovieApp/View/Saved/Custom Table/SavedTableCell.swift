@@ -76,7 +76,8 @@ extension SavedTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didSelected(indx: (indexPath.row + 1).description)
+        let data = items?[indexPath.row].id
+        delegate?.didSelected(indx: (data)?.description ?? "")
     }
 }
 
