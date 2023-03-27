@@ -50,7 +50,6 @@ class DetailViewModel: DetailViewModelDelegate{
     func saveId(id: String){
         data.append(id)
         defautls.set(data, forKey: "MovieIds")
-        print(data)
     }
     
     func retrive(){

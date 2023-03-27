@@ -137,16 +137,23 @@ class DetailViewController: UIViewController {
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
         self.viewModel.data = data ?? []
         print(data, "CHECKER ")
-        data?.forEach({ id in
-            if id == viewModel.items.value.id.description{
-                print(id, "if", viewModel.items.value.id)
+        //        data?.forEach({ id in
+        //            if id == viewModel.items.value.id.description{
+        //                print(id, "if", viewModel.items.value.id)
+        //                saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+        //
+        //            }else{
+        //                print(id, "else", viewModel.items.value.id)
+        //                saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        //            }
+        //        })
+        for i in data ?? []{
+            if i == viewModel.items.value.id.description{
+                print(i, "if", viewModel.items.value.id)
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-                
-            }else{
-                print(id, "else", viewModel.items.value.id)
-                saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+                break
             }
-        })
+        }
     }
     
     @objc func dismissTapped(){
