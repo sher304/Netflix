@@ -63,17 +63,6 @@ class HomeViewController: UIViewController {
         return imageV
     }()
     
-    //MARK: SAVE BUTTON
-    private lazy var saveButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "bookmark.circle"), for: .normal)
-        button.tintColor = .white
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
-        return button
-    }()
-    
     //MARK: GRADIENT VIEW
     private lazy var gradientView: GradientView = {
         let view = GradientView(gradientStartColor: .black, gradientEndColor: .clear)
@@ -133,14 +122,6 @@ class HomeViewController: UIViewController {
             make.width.height.equalTo(45)
         }
         
-        //MARK: SAVE BUTTON - CONSTRAINT
-        posterImage.addSubview(saveButton)
-        saveButton.snp.makeConstraints { make in
-            make.trailing.equalTo(-10)
-            make.height.width.equalTo(55)
-            make.bottom.equalTo(-60)
-        }
-        
         //MARK: POSTER'S BOTTOM GRADIENT - CONSTRAINT
         posterImage.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
@@ -162,24 +143,15 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
     func bindViewModel(){
-                viewModel.shareData()
-                viewModel.movies.bind { _ in
-                    DispatchQueue.main.async { [self] in
-                        self.movieTitle.text = viewModel.movies.value.items.first?.title
-                        self.posterImage.kf.setImage(with: URL(string: viewModel.movies.value.items.first?.image ?? "nil"))
-                        self.moviesTable.reloadData()
-        
-                    }
-                }
-//        viewModel.shareData()
-//        viewModel.items.bind { _ in
-//            DispatchQueue.main.async {
-//                self.movieTitle.text = self.viewModel.items.value.results.first?.name
-//                self.moviesTable.reloadData()
-//            }
-//        }
+        viewModel.shareData()
+        viewModel.movies.bind { _ in
+            DispatchQueue.main.async { [self] in
+                self.movieTitle.text = viewModel.movies.value.items.first?.title
+                self.posterImage.kf.setImage(with: URL(string: viewModel.movies.value.items.first?.image ?? "nil"))
+                self.moviesTable.reloadData()
+            }
+        }
     }
     
     func fillData(){
@@ -189,11 +161,6 @@ class HomeViewController: UIViewController {
             movieTitle.text = item.first?.fullTitle
             posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
         }
-        
-        //        DispatchQueue.main.async {
-        //            let items = self.viewModel.items.value.results
-        //            self.movieTitle.text = items.first?.name
-        //        }
     }
     
     @objc func didSearchTapped(){
@@ -214,11 +181,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: CONNETCT WITH A CUSTOM CELL
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = MoviesTableViewCell()
-        //        let items = viewModel.movies.value
-        //        cell.fetchData(data: items, delegate: self)
-        //        return cell
-        
         let cell = MoviesTableViewCell()
         let items = viewModel.movies.value
         cell.fetchData(data: items, delegate: self)
@@ -246,29 +208,15 @@ extension HomeViewController: UIScrollViewDelegate{
 
 
 extension HomeViewController: MovieTableDelegate {
-        func didSelected(indx: String) {
-            let vc = DetailViewController()
-            vc.hero.isEnabled = true
-            vc.hero.modalAnimationType = .slide(direction: .up)
-            viewModel.movies.value.items.forEach { i in
-                if i.rank == indx{
-                    vc.fetchId(id: i.id, url: i.image)
-                }
+    func didSelected(indx: String) {
+        let vc = DetailViewController()
+        vc.hero.isEnabled = true
+        vc.hero.modalAnimationType = .slide(direction: .up)
+        viewModel.movies.value.items.forEach { i in
+            if i.rank == indx{
+                vc.fetchId(id: i.id, url: i.image)
             }
-            present(vc, animated: true)
         }
-    
-//    func didSelected(indx: String) {
-//        let vc = DetailViewController()
-//        vc.hero.isEnabled = true
-//        vc.hero.modalAnimationType = .slide(direction: .up)
-//        viewModel.movies.value.items.forEach { i in
-//            if i.id.description == indx{
-//                print(i.id)
-//                print(indx)
-//                vc.fetchId(id: i.id.description)
-//            }
-//        }
-//        present(vc, animated: true)
-//    }
+        present(vc, animated: true)
+    }
 }
