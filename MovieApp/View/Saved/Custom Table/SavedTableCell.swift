@@ -12,12 +12,23 @@ import SnapKit
 
 class SavedTableCell: UITableViewCell {
     
+    //MARK: Identifier
     static let identifier = "SavedTableCell"
     
+    //MARK: Result of Data
     var dataOfResult: [Item]? = nil
     
+    //MARK: Delegate
     var delegate: MovieTableDelegate? = nil
     
+    //MARK: Refresh Control
+     private lazy var refreshControl: UIRefreshControl = {
+         let refrechC = UIRefreshControl()
+         refrechC.addTarget(self, action: #selector(refreshPulled(sender:)), for: .valueChanged)
+         return refrechC
+     }()
+     
+    //MARK: Collection V
     private lazy var savedCollectioV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -26,12 +37,14 @@ class SavedTableCell: UITableViewCell {
         collectionV.delegate = self
         collectionV.dataSource = self
         collectionV.backgroundColor = .black
+        collectionV.refreshControl = refreshControl
         return collectionV
     }()
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setupconstraints()
+        
     }
     
     //MARK: Setup Constraints
@@ -43,6 +56,16 @@ class SavedTableCell: UITableViewCell {
             make.leading.equalTo(15)
             make.bottom.trailing.top.equalToSuperview()
         }
+    }
+    
+    //MARK: Refresh Pulled
+    @objc func refreshPulled(sender: UIRefreshControl){
+        SavedViewModel.shared.filtredData.bind { _ in
+            DispatchQueue.main.async {
+                self.savedCollectioV.reloadData()
+            }
+        }
+        sender.endRefreshing()
     }
     
     //MARK: Fetch Data

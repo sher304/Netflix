@@ -32,7 +32,6 @@ class MoviesCollectionCell: UICollectionViewCell {
     //MARK: MOVIE TITLE
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Shawshank Redemption"
         label.textColor = .white
         label.font = .systemFont(ofSize: 12, weight: .heavy)
         label.numberOfLines = 1
@@ -43,7 +42,6 @@ class MoviesCollectionCell: UICollectionViewCell {
     //MARK: CREWS TITLE
     private lazy var crewLabel: UILabel = {
         let label = UILabel()
-        label.text = "Frank Darabont (dir.), Tim Robbins, Morgan Freeman"
         label.font = .systemFont(ofSize: 8, weight: .semibold)
         label.textColor = .white
         label.numberOfLines = 1
@@ -54,7 +52,6 @@ class MoviesCollectionCell: UICollectionViewCell {
     //MARK: RATTING TITLE
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.text = "9.2"
         label.textColor = .white
         label.font = .systemFont(ofSize: 8, weight: .semibold)
         return label
@@ -65,12 +62,13 @@ class MoviesCollectionCell: UICollectionViewCell {
         setupConstraints()
     }
     
+    //MARK: Fill Data
     func fillData(title: String, crew: String, posterURL: String, rating: String){
         DispatchQueue.main.async { [self] in
             movieTitle.text = title
             crewLabel.text = crew
-            posterImage.kf.setImage(with: URL(string: posterURL))
             ratingLabel.text = rating
+            posterImage.kf.setImage(with: URL(string: posterURL))
         }
     }
     

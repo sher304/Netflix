@@ -11,10 +11,6 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
-    //    private lazy var viewModel: DetailViewModel = {
-    //        return DetailViewModel()
-    //    }()
-    
     private var viewModel = DetailViewModel.shared
     
     private lazy var moviePoster: UIImageView = {
@@ -32,7 +28,7 @@ class DetailViewController: UIViewController {
     
     private lazy var movieInfrom: UILabel = {
         let label = UILabel()
-        label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit quam dui, vivamus bibendum ut. A morbi mi tortor ut felis non accumsan accumsan quis. Massa, id ut ipsum aliquam  enim non posuere pulvinar diam."
+        label.text = "2010"
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .white
         label.numberOfLines = 0
@@ -55,6 +51,24 @@ class DetailViewController: UIViewController {
         button.tintColor = .white
         button.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var wheelOfActors: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionV = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionV.delegate = self
+        collectionV.dataSource = self
+        collectionV.register(WheelColleitonCell.self, forCellWithReuseIdentifier: WheelColleitonCell.identifier)
+        collectionV.isPagingEnabled = true
+        collectionV.showsHorizontalScrollIndicator = false
+        collectionV.backgroundColor = .black
+        collectionV.layer.cornerRadius = 22
+        collectionV.layer.masksToBounds = true
+        return collectionV
     }()
     
     override func viewDidLoad() {
@@ -83,6 +97,8 @@ class DetailViewController: UIViewController {
         movieTitle.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.top.equalTo(moviePoster.snp.bottom).offset(25)
+            make.width.equalTo(view.frame.width / 1.2)
+            make.height.equalTo(40)
         }
         
         view.addSubview(movieInfrom)
@@ -98,6 +114,14 @@ class DetailViewController: UIViewController {
             make.trailing.equalTo(-15)
             make.height.width.equalTo(40)
             make.centerY.equalTo(movieTitle)
+        }
+        
+        view.addSubview(wheelOfActors)
+        wheelOfActors.snp.makeConstraints { make in
+            make.leading.equalTo(20)
+            make.trailing.equalTo(-20)
+            make.height.equalTo(200)
+            make.top.equalTo(movieInfrom.snp.bottom).offset(30)
         }
         
     }
@@ -122,7 +146,7 @@ class DetailViewController: UIViewController {
     //MARK: Check is Movie saved
     func checkIsSaved(){
         let dataBase = viewModel.defautls.array(forKey: "MovieIds") as? [String]
-        self.viewModel.data = dataBase ?? []
+        self.viewModel.dataId = dataBase ?? []
         for id in dataBase ?? []{
             if id == viewModel.dataMovie.value.imDBID.description{
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
@@ -161,4 +185,23 @@ class DetailViewController: UIViewController {
             viewModel.delete(id: viewModel.dataMovie.value.imDBID.description)
         }
     }
+}
+
+extension DetailViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.dataMovie.value.items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WheelColleitonCell.identifier, for: indexPath) as? WheelColleitonCell else { return WheelColleitonCell()}
+        let data = viewModel.dataMovie.value.items[indexPath.row]
+//        cell.fetch(title: "Leonardo DiCaprio and Ken Watanabe in Inception (2010)", url: "https://m.media-amazon.com/images/M/MV5BMjIyNjk1OTgzNV5BMl5BanBnXkFtZTcwOTU0OTk1Mw@@._V1_Ratio1.5000_AL_.jpg")
+        cell.fetch(title: data.title, url: data.image)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: wheelOfActors.frame.width, height: wheelOfActors.frame.height)
+    }
+    
 }

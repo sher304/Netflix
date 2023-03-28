@@ -10,16 +10,14 @@ import Hero
 import SnapKit
 
 class SaveViewController: UIViewController {
-    
-    private lazy var refreshControl: UIRefreshControl = {
-        let refreshD = UIRefreshControl()
-        return refreshD
-    }()
-    
+
+    //MARK: ViewModel
     private var viewModel = SavedViewModel.shared
     
+    //MARK: ContentSize
     private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 450)
     
+    //MARK: Scroll View
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView(frame: .zero)
         scrollV.contentSize = contentSize
@@ -29,6 +27,7 @@ class SaveViewController: UIViewController {
         return scrollV
     }()
     
+    //MARK: Content View
     private lazy var contentView: UIView = {
         let view = UIView()
         view.frame.size = contentSize
@@ -36,12 +35,14 @@ class SaveViewController: UIViewController {
         return view
     }()
     
+    //MARK: Netflix Logo Image
     private lazy var netflixLogo: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "netflix-logo")
         return image
     }()
     
+    //MARK: My List Title
     private lazy var myListLabel: UILabel = {
         let label = UILabel()
         label.text = "My List"
@@ -50,6 +51,7 @@ class SaveViewController: UIViewController {
         return label
     }()
     
+    //MARK: Table View
     private lazy var savedTable: UITableView = {
         let tableV = UITableView()
         tableV.register(SavedTableCell.self, forCellReuseIdentifier: SavedTableCell.identifier)
