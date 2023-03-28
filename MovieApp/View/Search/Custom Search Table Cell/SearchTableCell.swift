@@ -11,17 +11,17 @@ import SnapKit
 
 class SearchTableCell: UITableViewCell{
     
+    //MARK: Identifier
     static let identifier = "Search Cell"
     
     private lazy var posterImage: UIImageView = {
         let imageV = UIImageView()
-        imageV.backgroundColor = .orange
         return imageV
     }()
     
+    //MARK: Title
     private lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Shawshank Redemption"
         label.textColor = .white
         label.font = .systemFont(ofSize: 15, weight: .medium)
         return label

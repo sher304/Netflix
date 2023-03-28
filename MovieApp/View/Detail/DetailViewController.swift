@@ -146,7 +146,7 @@ class DetailViewController: UIViewController {
     //MARK: Check is Movie saved
     func checkIsSaved(){
         let dataBase = viewModel.defautls.array(forKey: "MovieIds") as? [String]
-        self.viewModel.data = dataBase ?? []
+        self.viewModel.dataId = dataBase ?? []
         for id in dataBase ?? []{
             if id == viewModel.dataMovie.value.imDBID.description{
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
@@ -189,12 +189,14 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return viewModel.dataMovie.value.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WheelColleitonCell.identifier, for: indexPath) as? WheelColleitonCell else { return WheelColleitonCell()}
-        cell.fetch(title: "Leonardo DiCaprio and Ken Watanabe in Inception (2010)", url: "https://m.media-amazon.com/images/M/MV5BMjIyNjk1OTgzNV5BMl5BanBnXkFtZTcwOTU0OTk1Mw@@._V1_Ratio1.5000_AL_.jpg")
+        let data = viewModel.dataMovie.value.items[indexPath.row]
+//        cell.fetch(title: "Leonardo DiCaprio and Ken Watanabe in Inception (2010)", url: "https://m.media-amazon.com/images/M/MV5BMjIyNjk1OTgzNV5BMl5BanBnXkFtZTcwOTU0OTk1Mw@@._V1_Ratio1.5000_AL_.jpg")
+        cell.fetch(title: data.title, url: data.image)
         return cell
     }
     

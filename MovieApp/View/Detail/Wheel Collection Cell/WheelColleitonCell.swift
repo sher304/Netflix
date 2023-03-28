@@ -12,6 +12,7 @@ import SnapKit
 
 class WheelColleitonCell: UICollectionViewCell {
     
+    //MARK: Identifier
     static let identifier = "WheelCell"
     
     private lazy var imagesOfActors: UIImageView = {
@@ -26,7 +27,7 @@ class WheelColleitonCell: UICollectionViewCell {
         return view
     }()
     
-
+    //MARK: Title of Image
     private lazy var titleOfImage: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .bold)
@@ -42,6 +43,7 @@ class WheelColleitonCell: UICollectionViewCell {
         setupConstraints()
     }
     
+    //MARK: Fetch Data
     func fetch(title: String, url: String){
         DispatchQueue.main.async {
             self.imagesOfActors.kf.indicatorType = .activity
@@ -50,6 +52,7 @@ class WheelColleitonCell: UICollectionViewCell {
         }
     }
     
+    //MARK: Set Constriants
     private func setupConstraints(){
         contentView.addSubview(imagesOfActors)
         imagesOfActors.snp.makeConstraints { make in

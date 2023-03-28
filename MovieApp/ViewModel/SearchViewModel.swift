@@ -16,9 +16,6 @@ protocol SearchViewModelDelegate {
 
 class SearchViewModel: SearchViewModelDelegate{
     
-    //    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
-    //    var sortedItems: [ResultTest] = []
-    
     var movieData = Dynamic(Movies(items: [], errorMessage: ""))
     var sortedMovies: [Item] = []
     
@@ -32,9 +29,6 @@ class SearchViewModel: SearchViewModelDelegate{
     
     //MARK: ShareData
     func shareData(){
-        //        network.getAllTest { movie in
-        //            self.items.value = movie
-        //        }
         APIAuth().getTopMovies { movieData in
             switch movieData{
             case.success(let movieData):
@@ -56,5 +50,4 @@ class SearchViewModel: SearchViewModelDelegate{
     func filterData(){
         self.sortedMovies = self.movieData.value.items.filter({$0.fullTitle.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
     }
-    
 }

@@ -9,54 +9,12 @@ import Foundation
 import Alamofire
 
 protocol NetwrokService {
-//    func getMovies(completion: @escaping(Movies) ->Void )
     static func getMovies<T: Codable>(method: String, completion: @escaping(Result<T, Error>) -> Void)
     static func getMovies<T: Codable>(id: String, method: String, completion: @escaping(Result<T, Error>) -> Void)
-    //    func getAllTest(completion: @escaping(TestAll) -> Void)
-    
 }
 
 class Network: NetwrokService {
-    
-//    func getMovies(completion: @escaping (Movies) -> Void) {
-//        guard let url = URL(string: "https://imdb-api.com/en/API/Top250Movies/k_cd0ge5lq/") else { return }
-//        AF.request(url).response { responce in
-//            DispatchQueue.main.async {
-//                guard let data = responce.data else { return }
-//                guard let jsonOBJ = try? JSONDecoder().decode(Movies.self, from: data) else { return }
-//                completion(jsonOBJ)
-//            }
-//        }
-//    }
-    
-//    func getMovie(id: String?, completion: @escaping(SearchModel) -> Void ){
-//        guard let url = URL(string: "https://imdb-api.com/en/API/FullCast/k_cd0ge5lq/\(id ?? "tt0110413")") else { return }
-//        print(url)
-//        AF.request(url).response { responce in
-//            DispatchQueue.main.async {
-//                guard let data = responce.data else { return }
-//                guard let jsonObj = try? JSONDecoder().decode(SearchModel.self, from: data) else {
-//                    print("error")
-//                    return }
-//                print(jsonObj)
-//                completion(jsonObj)
-//            }
-//        }
-//    }
-    //
-    //    func getAllTest(completion: @escaping(TestAll) -> Void){
-    //        guard let url = URL(string: "https://rickandmortyapi.com/api/character/") else { return }
-    //        AF.request(url).response { responce in
-    //            DispatchQueue.main.async {
-    //                guard let data = responce.data else { return }
-    //                guard let jsonObj = try? JSONDecoder().decode(TestAll.self, from: data) else { return }
-    //                completion(jsonObj)
-    //            }
-    //        }
-    //    }
-    //
-    //
-    
+    //MARK: Network Request Method
     static func getMovies<T>(method: String, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable, T : Encodable {
         guard let url = URL(string: "https://imdb-api.com/en/API/Top250Movies/k_cd0ge5lq/") else { return }
         AF.request(url).response { responce in
@@ -75,6 +33,7 @@ class Network: NetwrokService {
         }
     }
     
+    //MARK: Network Request Method With Id
     static func getMovies<T: Codable>(id: String, method: String, completion: @escaping(Result<T, Error>) -> Void){
         guard let url = URL(string: "https://imdb-api.com/en/API/Images/k_cd0ge5lq/\(id)") else { return }
         print(url)

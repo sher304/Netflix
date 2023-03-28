@@ -17,8 +17,7 @@ class MoviesTableViewCell: UITableViewCell {
     
     //MARK: THE CELL'S IDENTIFIER
     static let identifier = "MoviesCell"
-    
-//    var items: Movies? = nil
+
     var items: Movies? = nil
     
     var delegate: MovieTableDelegate? = nil
@@ -53,6 +52,7 @@ class MoviesTableViewCell: UITableViewCell {
         }
     }
     
+    //MARK: Fetch Data
     func fetchData(data: Movies, delegate: MovieTableDelegate){
         DispatchQueue.main.async { [self] in
             items = data
@@ -61,16 +61,6 @@ class MoviesTableViewCell: UITableViewCell {
 
         }
     }
-    
-//    func fetchData(data: Movies, delegate: MovieTableDelegate){
-//        DispatchQueue.main.async { [self] in
-//            items = data
-//            self.delegate = delegate
-//            moviesCollection.reloadData()
-//
-//        }
-//    }
-    
 }
 
 //MARK: COLLECTION VIEW SETTINGS
@@ -84,10 +74,7 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
-        
-        
         guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
-//        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
         let titles = items.title
         let crews = items.crew
         let posterURL = items.image
@@ -106,6 +93,7 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
         return 35
     }
     
+    //MARK: Dis Selected Item
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.row + 1
         delegate?.didSelected(indx: index.description)

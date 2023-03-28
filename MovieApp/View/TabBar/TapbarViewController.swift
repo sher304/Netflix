@@ -10,6 +10,7 @@ import SnapKit
 
 class TapbarViewController: UITabBarController {
     
+    //MARK: Middle Home Button
     private lazy var middleButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .orange

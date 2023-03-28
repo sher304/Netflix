@@ -11,10 +11,12 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     
+    //MARK: Search View Model
     private lazy var searchViewModel: SearchViewModel = {
         return SearchViewModel()
     }()
     
+    //MARK: Search Bar
     private lazy var searchBar: UISearchBar = {
         let searchB = UISearchBar()
         searchB.backgroundImage = UIImage()
@@ -29,6 +31,7 @@ class SearchViewController: UIViewController {
         return searchB
     }()
     
+    //MARK: Search Table
     private lazy var searchTable: UITableView = {
         let tableV = UITableView()
         tableV.register(SearchTableCell.self, forCellReuseIdentifier: SearchTableCell.identifier)
@@ -58,18 +61,11 @@ class SearchViewController: UIViewController {
             make.top.equalTo(searchBar.snp.bottom).offset(15)
             make.leading.bottom.trailing.equalToSuperview()
         }
-        
     }
 
     //MARK: Binder
     func binder(){
         searchViewModel.shareData()
-//        searchViewModel.items.bind { items in
-//            DispatchQueue.main.async {
-//                self.searchTable.reloadData()
-//            }
-//        }
-        
         searchViewModel.movieData.bind { items in
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
@@ -87,17 +83,19 @@ class SearchViewController: UIViewController {
 //MARK: Work with Table Delegate
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //MARK: return amount
         return searchViewModel.sortedMovies.count
     }
     
+    //MARK: link with cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SearchTableCell()
-//        let items = searchViewModel.sortedItems[indexPath.row]
         let items = searchViewModel.sortedMovies[indexPath.row]
         cell.fillData(title: items.title, url: items.image)
         return cell
     }
     
+    //MARK: size of cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }

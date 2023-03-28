@@ -76,6 +76,7 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    //MARK: Table View
     private lazy var moviesTable: UITableView = {
         let tableV = UITableView()
         tableV.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
@@ -143,6 +144,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    //MARK: Binder
     func bindViewModel(){
         viewModel.shareData()
         viewModel.movies.bind { _ in
@@ -154,6 +156,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    //MARK: Fill Data
     func fillData(){
         DispatchQueue.main.async { [self] in
             let item = viewModel.movies.value.items
@@ -163,6 +166,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    //MARK: Did Search Tapped
     @objc func didSearchTapped(){
         let vc = SearchViewController()
         vc.hero.isEnabled = true
