@@ -18,6 +18,13 @@ class SavedTableCell: UITableViewCell {
     
     var delegate: MovieTableDelegate? = nil
     
+     private lazy var refreshControl: UIRefreshControl = {
+         let refrechC = UIRefreshControl()
+         refrechC.addTarget(self, action: #selector(refreshPulled(sender:)), for: .valueChanged)
+         return refrechC
+     }()
+     
+    
     private lazy var savedCollectioV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -32,6 +39,7 @@ class SavedTableCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupconstraints()
+        savedCollectioV.refreshControl = refreshControl
     }
     
     //MARK: Setup Constraints
@@ -43,6 +51,16 @@ class SavedTableCell: UITableViewCell {
             make.leading.equalTo(15)
             make.bottom.trailing.top.equalToSuperview()
         }
+    }
+    
+    
+    @objc func refreshPulled(sender: UIRefreshControl){
+        SavedViewModel.shared.filtredData.bind { _ in
+            DispatchQueue.main.async {
+                self.savedCollectioV.reloadData()
+            }
+        }
+        sender.endRefreshing()
     }
     
     //MARK: Fetch Data

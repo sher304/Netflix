@@ -10,12 +10,7 @@ import Hero
 import SnapKit
 
 class SaveViewController: UIViewController {
-    
-    private lazy var refreshControl: UIRefreshControl = {
-        let refreshD = UIRefreshControl()
-        return refreshD
-    }()
-    
+
     private var viewModel = SavedViewModel.shared
     
     private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 450)

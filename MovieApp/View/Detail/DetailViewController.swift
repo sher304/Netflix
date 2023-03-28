@@ -11,10 +11,6 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
-    //    private lazy var viewModel: DetailViewModel = {
-    //        return DetailViewModel()
-    //    }()
-    
     private var viewModel = DetailViewModel.shared
     
     private lazy var moviePoster: UIImageView = {
@@ -83,6 +79,8 @@ class DetailViewController: UIViewController {
         movieTitle.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.top.equalTo(moviePoster.snp.bottom).offset(25)
+            make.width.equalTo(view.frame.width / 2)
+            make.height.equalTo(40)
         }
         
         view.addSubview(movieInfrom)
