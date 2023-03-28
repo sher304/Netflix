@@ -28,6 +28,7 @@ class SearchViewController: UIViewController {
         searchB.autocorrectionType = .no
         searchB.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search for a show, movie, genre, e.t.c.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         searchB.delegate = self
+        searchB.autocapitalizationType = .none
         return searchB
     }()
     

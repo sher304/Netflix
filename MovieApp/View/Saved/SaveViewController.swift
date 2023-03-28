@@ -117,7 +117,6 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource{
     //MARK: Link with Custom Table Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SavedTableCell()
-//        cell.fetchData(data: viewModel.filtredData.value, deleagate: self)
         cell.fetchData(data: viewModel.filtredData.value, deleagate: self)
         return cell
     }

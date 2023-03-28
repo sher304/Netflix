@@ -48,6 +48,6 @@ class SearchViewModel: SearchViewModelDelegate{
     
     //MARK: Filter Data of search
     func filterData(){
-        self.sortedMovies = self.movieData.value.items.filter({$0.fullTitle.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
+        self.sortedMovies = self.movieData.value.items.filter({$0.title.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
     }
 }
