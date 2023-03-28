@@ -51,6 +51,7 @@ class SavedCollectionCell: UICollectionViewCell {
         setupconstraints()
     }
     
+    //MARK: SetupConstraints
     private func setupconstraints(){
         contentView.backgroundColor =  .blue
         
@@ -83,6 +84,7 @@ class SavedCollectionCell: UICollectionViewCell {
         
     }
     
+    //MARK: Fill Data
     func fillData(title: String?, imageURL: String?, crew: String?){
         DispatchQueue.main.async {
             self.movieTite.text = title

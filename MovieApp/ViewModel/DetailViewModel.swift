@@ -10,6 +10,10 @@ import Foundation
 
 protocol DetailViewModelDelegate {
     func loadData()
+    func getId(id: String)
+    func saveId(id: String)
+    func retrive()
+    func delete(id: String)
 }
 
 class DetailViewModel: DetailViewModelDelegate{
@@ -20,23 +24,33 @@ class DetailViewModel: DetailViewModelDelegate{
     
     //    var itemMovie = Dynamic(SearchModel(imDBID: "", title: "", fullTitle: "", type: "", year: "", directors: Directors(job: "", items: []), writers: Directors(job: "", items: []), actors: [], others: [], errorMessage: ""))
     
+    //MARK: Network Connection
     private lazy var network: Network = {
         return Network()
     }()
     
+    //MARK: Set id of Movie
     var id: String?
+    
+    //MARK: Get Id of Movie
     func getId(id: String) {
         self.id = id
     }
     
-    var items = Dynamic(SingleTest(id: 0, name: "", status: "", species: "", type: "", gender: "", origin: LocationSingle(name: "", url: ""), location: LocationSingle(name: "", url: ""), image: "", episode: [], url: "", created: ""))
+    //MARK: Data Movie
+    //    var dataMovie = Dynamic(SingleTest(id: 0, name: "", status: "", species: "", type: "", gender: "", origin: LocationSingle(name: "", url: ""), location: LocationSingle(name: "", url: ""), image: "", episode: [], url: "", created: ""))
+    
+//    var dataMovie =  Dynamic(DetailModel(imDBID: "", title: "", fullTitle: "", type: "", year: "", directors: Directors(job: "", items: []), writers: Directors(job: "", items: []), actors: [], others: [], errorMessage: ""))
+    
+    var dataMovie =  Dynamic(DetailModel(imDBID: "", title: "", fullTitle: "", type: "", year: "", items: [], errorMessage: ""))
     
     
+    //MARK: Load Data
     func loadData(){
         APIAuth().getTopMovies(id: id ?? "!") { data in
             switch data{
             case.success(let data):
-                self.items.value = data
+                self.dataMovie.value = data
                 break
             case.failure(_):
                 print("errorrrerer")
@@ -45,20 +59,26 @@ class DetailViewModel: DetailViewModelDelegate{
         }
     }
     
+    //MARK: Data of Ids
     var data: [String] = []
+    
+    //MARK: UserDefaults
     let defautls = UserDefaults.standard
+    
+    //MARK: Save Id of Movie
     func saveId(id: String){
         data.append(id)
         defautls.set(data, forKey: "MovieIds")
     }
     
+    //MARK: Show  movie, from DB
     func retrive(){
         print(defautls.array(forKey: "MovieIds"))
     }
     
+    //MARK: Delete Movie from DB
     func delete(id: String){
         let filtredData = data.filter {$0 != id }
-        print(filtredData, "filterData")
         self.data = filtredData
         defautls.set(data, forKey: "MovieIds")
     }

@@ -19,7 +19,6 @@ class DetailViewController: UIViewController {
     
     private lazy var moviePoster: UIImageView = {
         let imageV = UIImageView()
-        imageV.backgroundColor = .orange
         return imageV
     }()
     
@@ -103,71 +102,63 @@ class DetailViewController: UIViewController {
         
     }
     
-    func fetchId(id: String){
+    func fetchId(id: String, url: String?){
         viewModel.id = id
-        
+        self.moviePoster.kf.indicatorType = .activity
+        self.moviePoster.kf.setImage(with: URL(string: url ?? ""))
     }
-    
-    //    func bindViewModel(){
-    //        viewModel.loadData()
-    //        viewModel.itemMovie.bind { chars in
-    //            DispatchQueue.main.async {
-    //                self.movieTitle.text = chars.fullTitle
-    //                self.movieInfrom.text = chars.type
-    //                self.moviePoster.kf.indicatorType = .activity
-    //                self.moviePoster.kf.setImage(with: URL(string: chars.actors.first?.image ?? ""))
-    //            }
-    //        }
-    //    }
     
     func bindViewModel(){
         viewModel.loadData()
-        viewModel.items.bind { chars in
+        viewModel.dataMovie.bind { chars in
             DispatchQueue.main.async {
-                self.movieTitle.text = chars.name
-                self.movieInfrom.text = chars.type
-                self.moviePoster.kf.indicatorType = .activity
-                self.moviePoster.kf.setImage(with: URL(string: chars.image))
+                self.movieTitle.text = chars.fullTitle
+                self.movieInfrom.text = chars.year
                 self.checkIsSaved()
             }
         }
     }
     
+    //MARK: Check is Movie saved
     func checkIsSaved(){
-        let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
-        self.viewModel.data = data ?? []
-        for i in data ?? []{
-            if i == viewModel.items.value.id.description{
-                print(i, "if", viewModel.items.value.id)
+        let dataBase = viewModel.defautls.array(forKey: "MovieIds") as? [String]
+        self.viewModel.data = dataBase ?? []
+        for id in dataBase ?? []{
+            if id == viewModel.dataMovie.value.imDBID.description{
                 saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                 break
             }
         }
     }
     
+    //MARK: Close View
     @objc func dismissTapped(){
         dismiss(animated: true)
     }
     
+    //MARK: Save Or Delete
     @objc func didFavSelected(){
         saveButton.isSelected = !saveButton.isSelected
         let data = viewModel.defautls.array(forKey: "MovieIds") as? [String]
+        
         if saveButton.isSelected {
             saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             if let id: String = data?.first(where: { item in
-                item == viewModel.items.value.id.description
-            }) {
+                item == viewModel.dataMovie.value.imDBID.description
+            }){
                 print("HAS DATA")
-                bindViewModel()
+                viewModel.delete(id: viewModel.dataMovie.value.imDBID.description)
             } else {
                 //MARK: SAVE
                 print("SAVE DATA")
-                viewModel.saveId(id: viewModel.items.value.id.description)
+                viewModel.saveId(id: viewModel.dataMovie.value.imDBID.description)
+                print(data, "dadatatatat")
             }
         }else {
             //MARK: Delete
             print("DELETE DATA")
-            viewModel.delete(id: viewModel.items.value.id.description)
+            saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            viewModel.delete(id: viewModel.dataMovie.value.imDBID.description)
         }
     }
 }

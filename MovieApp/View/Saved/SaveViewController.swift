@@ -11,6 +11,11 @@ import SnapKit
 
 class SaveViewController: UIViewController {
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshD = UIRefreshControl()
+        return refreshD
+    }()
+    
     private var viewModel = SavedViewModel.shared
     
     private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 450)
@@ -62,6 +67,7 @@ class SaveViewController: UIViewController {
         setupConstraints()
     }
     
+    //MARK: SetupConstraints
     private func setupConstraints(){
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -87,7 +93,8 @@ class SaveViewController: UIViewController {
         }
     }
     
-    func binder(){
+    //MARK: Binder
+    private func binder(){
         viewModel.loadView()
         viewModel.filtredData.bind { _ in
             DispatchQueue.main.async {
@@ -97,35 +104,43 @@ class SaveViewController: UIViewController {
     }
 }
 
-
+//MARK: Extenstion of TableDelegate
 extension SaveViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    //MARK: Number of cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
+    //MARK: Link with Custom Table Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SavedTableCell()
+//        cell.fetchData(data: viewModel.filtredData.value, deleagate: self)
         cell.fetchData(data: viewModel.filtredData.value, deleagate: self)
         return cell
     }
     
+    //MARK: Heigh of TableCell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 620
     }
 }
 
+//MARK: Extension of Scroll Delegate
 extension SearchViewController: UIScrollViewDelegate {
     
 }
 
+//MARK: Work With Custom Table Delegate
 extension SaveViewController: MovieTableDelegate{
+    //MARK: Work with Selected Delegate
     func didSelected(indx: String) {
         let vc = DetailViewController()
         vc.hero.isEnabled = true
         vc.hero.modalAnimationType = .slide(direction: .up)
         viewModel.filtredData.value.forEach { i in
             if i.id.description == indx{
-                vc.fetchId(id: i.id.description)
+                vc.fetchId(id: i.id.description, url: i.image)
             }
         }
         present(vc, animated: true)

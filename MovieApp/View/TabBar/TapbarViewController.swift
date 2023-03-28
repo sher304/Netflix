@@ -29,6 +29,7 @@ class TapbarViewController: UITabBarController {
         selectedIndex = 1
     }
     
+    //MARK: Generate VC in TapBar
     private func generateTapBar(){
         viewControllers = [
             genercateVC(vc: SearchViewController(), title: "Search", image: UIImage(systemName: "magnifyingglass")),
@@ -37,6 +38,7 @@ class TapbarViewController: UITabBarController {
         ]
     }
     
+    //MARK: Generate VC
     private func genercateVC(vc: UIViewController, title: String, image: UIImage?) -> UIViewController{
         vc.tabBarItem.title = title
         vc.tabBarItem.image = image
@@ -44,6 +46,7 @@ class TapbarViewController: UITabBarController {
     }
     
     
+    //MARK: Setup Constraints and View of TapBar
     private func setTabBarAppearance() {
         let positionOnX: CGFloat = 10
         let positionOnY: CGFloat = 14
@@ -81,6 +84,7 @@ class TapbarViewController: UITabBarController {
         tabBar.addSubview(middleButton)
     }
     
+    //MARK: Middle Button Index
     @objc func middleButtonTapped(){
         selectedIndex = 1
     }

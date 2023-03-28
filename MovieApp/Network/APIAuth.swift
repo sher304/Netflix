@@ -8,8 +8,12 @@
 import Foundation
 
 class APIAuth {
-
-    func getTopMovies(id: String, completion: @escaping (Result<SingleTest, Error>) -> Void) {
-        Network.getCharacter(id: id, method: "GET", completion: completion)
+    
+    func getTopMovies(id: String, completion: @escaping (Result<DetailModel, Error>) -> Void) {
+        Network.getMovies(id: id, method: "GET", completion: completion)
+    }
+    
+    func getTopMovies(completion: @escaping (Result<Movies, Error>) -> Void) {
+        Network.getMovies(method: "GET", completion: completion)
     }
 }
