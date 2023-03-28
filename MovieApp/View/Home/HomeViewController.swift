@@ -164,36 +164,36 @@ class HomeViewController: UIViewController {
     
     
     func bindViewModel(){
-        //        viewModel.shareData()
-        //        viewModel.movies.bind { _ in
-        //            DispatchQueue.main.async { [self] in
-        //                self.movieTitle.text = viewModel.movies.value.items.first?.title
-        //                self.posterImage.kf.setImage(with: URL(string: viewModel.movies.value.items.first?.image ?? "nil"))
-        //                self.moviesTable.reloadData()
-        //
-        //            }
-        //        }
-        viewModel.shareData()
-        viewModel.items.bind { _ in
-            DispatchQueue.main.async {
-                self.movieTitle.text = self.viewModel.items.value.results.first?.name
-                self.moviesTable.reloadData()
-            }
-        }
+                viewModel.shareData()
+                viewModel.movies.bind { _ in
+                    DispatchQueue.main.async { [self] in
+                        self.movieTitle.text = viewModel.movies.value.items.first?.title
+                        self.posterImage.kf.setImage(with: URL(string: viewModel.movies.value.items.first?.image ?? "nil"))
+                        self.moviesTable.reloadData()
+        
+                    }
+                }
+//        viewModel.shareData()
+//        viewModel.items.bind { _ in
+//            DispatchQueue.main.async {
+//                self.movieTitle.text = self.viewModel.items.value.results.first?.name
+//                self.moviesTable.reloadData()
+//            }
+//        }
     }
     
     func fillData(){
-        //        DispatchQueue.main.async { [self] in
-        //            let item = viewModel.movies.value.items
-        //            print(item)
-        //            movieTitle.text = item.first?.fullTitle
-        //            posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
-        //        }
-        DispatchQueue.main.async {
-            let items = self.viewModel.items.value.results
-            self.movieTitle.text = items.first?.name
-            
+        DispatchQueue.main.async { [self] in
+            let item = viewModel.movies.value.items
+            print(item)
+            movieTitle.text = item.first?.fullTitle
+            posterImage.kf.setImage(with: URL(string: item.first?.image ?? ""))
         }
+        
+        //        DispatchQueue.main.async {
+        //            let items = self.viewModel.items.value.results
+        //            self.movieTitle.text = items.first?.name
+        //        }
     }
     
     @objc func didSearchTapped(){
@@ -220,7 +220,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         //        return cell
         
         let cell = MoviesTableViewCell()
-        let items = viewModel.items.value
+        let items = viewModel.movies.value
         cell.fetchData(data: items, delegate: self)
         return cell
     }
@@ -246,27 +246,29 @@ extension HomeViewController: UIScrollViewDelegate{
 
 
 extension HomeViewController: MovieTableDelegate {
+        func didSelected(indx: String) {
+            let vc = DetailViewController()
+            vc.hero.isEnabled = true
+            vc.hero.modalAnimationType = .slide(direction: .up)
+            viewModel.movies.value.items.forEach { i in
+                if i.rank == indx{
+                    vc.fetchId(id: i.id, url: i.image)
+                }
+            }
+            present(vc, animated: true)
+        }
+    
 //    func didSelected(indx: String) {
 //        let vc = DetailViewController()
 //        vc.hero.isEnabled = true
 //        vc.hero.modalAnimationType = .slide(direction: .up)
 //        viewModel.movies.value.items.forEach { i in
-//            if i.rank == indx{
-//                vc.fetchId(id: i.id)
+//            if i.id.description == indx{
+//                print(i.id)
+//                print(indx)
+//                vc.fetchId(id: i.id.description)
 //            }
 //        }
 //        present(vc, animated: true)
 //    }
-    
-    func didSelected(indx: String) {
-        let vc = DetailViewController()
-        vc.hero.isEnabled = true
-        vc.hero.modalAnimationType = .slide(direction: .up)
-        viewModel.items.value.results.forEach { i in
-            if i.id.description == indx{
-                vc.fetchId(id: i.id.description)
-            }
-        }
-        present(vc, animated: true)
-    }
 }

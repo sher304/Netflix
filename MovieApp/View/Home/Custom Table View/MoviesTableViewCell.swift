@@ -19,7 +19,7 @@ class MoviesTableViewCell: UITableViewCell {
     static let identifier = "MoviesCell"
     
 //    var items: Movies? = nil
-    var items: TestAll? = nil
+    var items: Movies? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -53,7 +53,7 @@ class MoviesTableViewCell: UITableViewCell {
         }
     }
     
-    func fetchData(data: TestAll, delegate: MovieTableDelegate){
+    func fetchData(data: Movies, delegate: MovieTableDelegate){
         DispatchQueue.main.async { [self] in
             items = data
             self.delegate = delegate
@@ -78,8 +78,7 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
     
     //MARK: COLLECTION VIEW'S ROW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return items?.items.count ?? 0
-        return items?.results.count ?? 0
+        return items?.items.count ?? 0
     }
     
     //MARK: CONNECT WITH THE CUSTOM COLLECTION CELL
@@ -87,12 +86,13 @@ extension MoviesTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionV
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCollectionCell.identifier, for: indexPath) as? MoviesCollectionCell else { return MoviesCollectionCell()}
         
         
-//        guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
-        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
-        let titles = items.name
-        let crews = items.created
+        guard let items = items?.items[indexPath.row] else { return MoviesCollectionCell()}
+//        guard let items = items?.results[indexPath.row] else { return MoviesCollectionCell()}
+        let titles = items.title
+        let crews = items.crew
         let posterURL = items.image
-        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: items.type)
+        let rating = items.imDBRating
+        cell.fillData(title: titles, crew: crews, posterURL: posterURL, rating: rating)
         return cell
     }
     

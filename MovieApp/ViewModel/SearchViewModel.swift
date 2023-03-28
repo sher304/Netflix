@@ -8,40 +8,53 @@
 import Foundation
 
 protocol SearchViewModelDelegate {
-    
     func shareData()
+    func setTitle(title: String)
+    func filterData()
 }
 
 
 class SearchViewModel: SearchViewModelDelegate{
     
-    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
-    var sortedItems: [ResultTest] = []
+    //    var items = Dynamic(TestAll(info: Info(count: Int(), pages: 0, next: "", prev: .none), results: []))
+    //    var sortedItems: [ResultTest] = []
     
-//    var items = Dynamic(Movies(items: [], errorMessage: ""))
-//    var sortedMovies: [Item] = []
+    var movieData = Dynamic(Movies(items: [], errorMessage: ""))
+    var sortedMovies: [Item] = []
     
+    //MARK: Connect with network
     private lazy var network: NetwrokService = {
         return Network()
     }()
     
+    //MARK: Title of search
     var title: String?
+    
+    //MARK: ShareData
     func shareData(){
-//        network.getMovies { items in
-//            self.items.value = items
-//        }
-        network.getAllTest { test in
-            self.items.value = test
+        //        network.getAllTest { movie in
+        //            self.items.value = movie
+        //        }
+        APIAuth().getTopMovies { movieData in
+            switch movieData{
+            case.success(let movieData):
+                self.movieData.value = movieData
+                break
+            case.failure(_):
+                break
+            }
         }
     }
     
+    //MARK: Set title, of search
     func setTitle(title: String){
         self.title = title
         filterData()
     }
     
+    //MARK: Filter Data of search
     func filterData(){
-        self.sortedItems = self.items.value.results.filter({$0.name.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
+        self.sortedMovies = self.movieData.value.items.filter({$0.fullTitle.lowercased().prefix(self.title?.lowercased().count ?? 0) == self.title ?? ""})
     }
     
 }

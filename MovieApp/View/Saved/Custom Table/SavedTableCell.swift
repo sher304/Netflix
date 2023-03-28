@@ -14,7 +14,7 @@ class SavedTableCell: UITableViewCell {
     
     static let identifier = "SavedTableCell"
     
-    var items: [ResultTest]? = nil
+    var dataOfResult: [Item]? = nil
     
     var delegate: MovieTableDelegate? = nil
     
@@ -34,6 +34,7 @@ class SavedTableCell: UITableViewCell {
         setupconstraints()
     }
     
+    //MARK: Setup Constraints
     private func setupconstraints(){
         contentView.backgroundColor = .black
         
@@ -44,10 +45,10 @@ class SavedTableCell: UITableViewCell {
         }
     }
     
-    func fetchData(data: [ResultTest], deleagate: MovieTableDelegate){
+    //MARK: Fetch Data
+    func fetchData(data: [Item], deleagate: MovieTableDelegate){
         DispatchQueue.main.async {
-//            print(data, "saved Table")
-            self.items = data
+            self.dataOfResult = data
             self.delegate = deleagate
             self.savedCollectioV.reloadData()
         }
@@ -55,28 +56,30 @@ class SavedTableCell: UITableViewCell {
     
 }
 
-
+//MARK: Extenstion of Collection View Delegate
 extension SavedTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+    
+    //MARK: Cont of Items
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        print(items?.count, "count table delegate")
-        return items?.count ?? 0
+        return dataOfResult?.count ?? 0
     }
     
+    //MARK: Link with Custom Collection Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedCollectionCell.identifier, for: indexPath) as? SavedCollectionCell else { return SavedCollectionCell()}
-        
-        let items = items?[indexPath.row]
-        cell.fillData(title: items?.name, imageURL: items?.image, crew: items?.type)
+        let items = dataOfResult?[indexPath.row]
+        cell.fillData(title: items?.title, imageURL: items?.image, crew: items?.crew)
         return cell
     }
     
-    
+    //MARK: Size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 153, height: 200)
     }
     
+    //MARK: Did Selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = items?[indexPath.row].id
+        let data = dataOfResult?[indexPath.row].id
         delegate?.didSelected(indx: (data)?.description ?? "")
     }
 }

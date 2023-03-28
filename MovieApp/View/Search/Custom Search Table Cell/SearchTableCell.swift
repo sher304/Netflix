@@ -32,6 +32,7 @@ class SearchTableCell: UITableViewCell{
         setupConstraints()
     }
     
+    //MARK: SetupConstraints
     private func setupConstraints(){
         contentView.backgroundColor = .black
         
@@ -50,6 +51,7 @@ class SearchTableCell: UITableViewCell{
         }
     }
     
+    //MARK: FIll Data
     func fillData(title: String, url: String){
         DispatchQueue.main.async {
             self.movieTitle.text = title
