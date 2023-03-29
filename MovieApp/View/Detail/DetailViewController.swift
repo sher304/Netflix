@@ -170,17 +170,13 @@ class DetailViewController: UIViewController {
             if let id: String = data?.first(where: { item in
                 item == viewModel.dataMovie.value.imDBID.description
             }){
-                print("HAS DATA")
                 viewModel.delete(id: viewModel.dataMovie.value.imDBID.description)
             } else {
                 //MARK: SAVE
-                print("SAVE DATA")
                 viewModel.saveId(id: viewModel.dataMovie.value.imDBID.description)
-                print(data, "dadatatatat")
             }
         }else {
             //MARK: Delete
-            print("DELETE DATA")
             saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
             viewModel.delete(id: viewModel.dataMovie.value.imDBID.description)
         }
@@ -195,7 +191,6 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WheelColleitonCell.identifier, for: indexPath) as? WheelColleitonCell else { return WheelColleitonCell()}
         let data = viewModel.dataMovie.value.items[indexPath.row]
-//        cell.fetch(title: "Leonardo DiCaprio and Ken Watanabe in Inception (2010)", url: "https://m.media-amazon.com/images/M/MV5BMjIyNjk1OTgzNV5BMl5BanBnXkFtZTcwOTU0OTk1Mw@@._V1_Ratio1.5000_AL_.jpg")
         cell.fetch(title: data.title, url: data.image)
         return cell
     }

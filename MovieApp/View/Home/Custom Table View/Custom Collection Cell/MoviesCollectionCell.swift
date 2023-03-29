@@ -19,7 +19,6 @@ class MoviesCollectionCell: UICollectionViewCell {
     //MARK: POSTER IMAGE VIEW
     private lazy var posterImage: UIImageView = {
         let imageV = UIImageView()
-        imageV.backgroundColor = .orange
         return imageV
     }()
     

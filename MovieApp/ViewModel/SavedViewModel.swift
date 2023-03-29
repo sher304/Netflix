@@ -57,6 +57,6 @@ class SavedViewModel: SavedViewModelDelegate {
                 break
             }
         }
-        
+        sortItems(data: movieData.value)
     }
 }

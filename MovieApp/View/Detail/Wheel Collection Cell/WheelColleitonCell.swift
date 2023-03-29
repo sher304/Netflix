@@ -17,7 +17,6 @@ class WheelColleitonCell: UICollectionViewCell {
     
     private lazy var imagesOfActors: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .brown
         return image
     }()
 
