@@ -42,30 +42,22 @@ https://user-images.githubusercontent.com/87121837/228447069-099156bc-bb94-4150-
 
 https://user-images.githubusercontent.com/87121837/228450003-4f75d384-74d5-4945-9802-a9b40e615533.mp4
 
-<h3>Общие требования:</h3>
+<h3>Required:</h3>
 <ul>
-<li>Изображение - карусель при свайпе вправо меняет элемент</li>
-<li>Название</li>
-<li>Метка favorites</li>
-<li>Рейтинг товара</li>
-<li>Цвет товара</li>
-<li>Детали товара</li>
-<li>Характеристика</li>
-<li>Добавить в корзину</li>
+<li>Poster of Movie</li>
+<li>Title of Movie</li>
 </ul>
 
-<h1 align="center">My Cart</h1>
+<h1 align="center">Saved Page</h1>
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/87121837/186835820-663f0cc1-e307-48c7-b346-60104e56e613.png" alt="альтернативный текст" width="300" height="600" align="center">
+<img src="https://user-images.githubusercontent.com/87121837/228450672-d3093016-690b-4437-baad-bce0830cade4.png" alt="альтернативный текст" width="300" height="600" align="center">
 </div>
 
 
-<h3>Общие требования:</h3>
+<h3>Required:</h3>
 <ul>
-<li>Название</li>
-<li>Изображение</li>
-<li>Цену за шт.: цена с учетом скидки</li>
-<li>Итоговую цену с учетом количества - данного товара, добавленного в корзину</li>
-<li>Стоимость доставки</li>
+<li>List of saved Movies</li>
+<li>Title of Movie</li>
+<li>Poster of Movie</li>
 </ul>
