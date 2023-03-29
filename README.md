@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/87121837/228447069-099156bc-bb94-4150-
 <div align="center">
 
 
-<img src="https://user-images.githubusercontent.com/87121837/228447647-c460fb0f-5eb4-4df7-a0a4-31ad68240dd5.png" alt="альтернативный текст" width="150" height="300" align="center">
+<img src="https://user-images.githubusercontent.com/87121837/228447647-c460fb0f-5eb4-4df7-a0a4-31ad68240dd5.png" alt="альтернативный текст" width="250" height="450" align="center">
 </div>
 
 <h3>Cell of Movie required has:</h3>
@@ -30,19 +30,20 @@ https://user-images.githubusercontent.com/87121837/228447069-099156bc-bb94-4150-
 <div align="center">
 
 
-<img src="https://user-images.githubusercontent.com/87121837/228448202-6019d4be-0b78-498a-9395-457ba6f06684.png" alt="альтернативный текст" width="150" height="300" align="center">
+<img src="https://user-images.githubusercontent.com/87121837/228448466-2a8c1319-5ceb-4a5e-acf6-4ab60504c52c.png" alt="альтернативный текст" width="250" height="450" align="center">
 </div>
 
 <ul>
-<li>Brand</li>
-<li>Price</li>
-<li>Size - только отрисовать как в Figma</li>
+<li>Title</li>
+<li>Year</li>
+<li>Available</li>
+<li>Button filled if movie saved</li>
 </ul>
 
 <h1 align="center">Product Details</h1>
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/87121837/186835668-9e72ba12-411b-4059-b479-69812dd185a1.png" alt="альтернативный текст" width="300" height="600" align="center">
+<img src="https://user-images.githubusercontent.com/87121837/228448466-2a8c1319-5ceb-4a5e-acf6-4ab60504c52c.png" alt="альтернативный текст" width="300" height="600" align="center">
 </div>
 
 <h3>Общие требования:</h3>
