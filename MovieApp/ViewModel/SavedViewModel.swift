@@ -47,16 +47,16 @@ class SavedViewModel: SavedViewModelDelegate {
     
     //MARK: Load View
     func loadView(){
-//        APIAuth().getTopMovies { dataMovie in
-//            switch dataMovie{
-//            case.success(let successData):
-//                self.movieData.value = successData
-//                self.sortItems(data: successData)
-//                break
-//            case.failure(_):
-//                break
-//            }
-//        }
+        APIAuth().getTopMovies { dataMovie in
+            switch dataMovie{
+            case.success(let successData):
+                self.movieData.value = successData
+                self.sortItems(data: successData)
+                break
+            case.failure(_):
+                break
+            }
+        }
         sortItems(data: movieData.value)
     }
 }
