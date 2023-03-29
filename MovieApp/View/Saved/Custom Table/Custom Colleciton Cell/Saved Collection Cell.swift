@@ -16,7 +16,6 @@ class SavedCollectionCell: UICollectionViewCell {
     
     private lazy var posterImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .green
         return image
     }()
     
@@ -28,7 +27,6 @@ class SavedCollectionCell: UICollectionViewCell {
     
     private lazy var movieTite: UILabel = {
         let label = UILabel()
-        label.text = "MOVIE Title"
         label.font = .systemFont(ofSize: 12, weight: .heavy)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -38,7 +36,6 @@ class SavedCollectionCell: UICollectionViewCell {
     
     private lazy var movieCrew: UILabel = {
         let label = UILabel()
-        label.text = "Crew"
         label.font = .systemFont(ofSize: 12)
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
