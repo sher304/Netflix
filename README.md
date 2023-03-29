@@ -28,8 +28,6 @@ https://user-images.githubusercontent.com/87121837/228447069-099156bc-bb94-4150-
 <h2 align="center">Detail Page</h2>
 
 <div align="center">
-
-
 <img src="https://user-images.githubusercontent.com/87121837/228448466-2a8c1319-5ceb-4a5e-acf6-4ab60504c52c.png" alt="альтернативный текст" width="250" height="450" align="center">
 </div>
 
@@ -40,11 +38,9 @@ https://user-images.githubusercontent.com/87121837/228447069-099156bc-bb94-4150-
 <li>Button filled if movie saved</li>
 </ul>
 
-<h1 align="center">Product Details</h1>
+<h1 align="center">Search Page</h1>
 
-<div align="center">
-<img src="https://user-images.githubusercontent.com/87121837/228448466-2a8c1319-5ceb-4a5e-acf6-4ab60504c52c.png" alt="альтернативный текст" width="300" height="600" align="center">
-</div>
+https://user-images.githubusercontent.com/87121837/228450003-4f75d384-74d5-4945-9802-a9b40e615533.mp4
 
 <h3>Общие требования:</h3>
 <ul>
